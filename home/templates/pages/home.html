@@ -1,0 +1,47 @@
+{% extends "pages/base.html" %}
+
+{% block title %}
+    Trang Chủ
+{% endblock %}
+
+{% block content %}
+<h2 class='text-center alert alert-success'>Trang chủ</h2>
+<div class='d-flex justify-content-end'>
+    <button class='btn btn-primary' id="crawlButton">
+        {% if process_running %}
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Đang lấy
+        {% else %}
+            Lấy dữ liệu
+        {% endif %}
+    </button>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function() {
+            $('#crawlButton').click(function() {
+                var button = $(this);
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "run_crawl" %}',
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.is_running) {
+                            button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Đang lấy');
+                        }else{
+                            button.html('Lấy dữ liệu');
+                        }
+                    },
+                    error: function(xhr) {
+                        var errorResponse = JSON.parse(xhr.responseText);
+                        button.html('Lấy dữ liệu');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,116 @@
+[2024-11-19 14:49:42]: Cannot assign "2": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:51:29]: Cannot assign "3": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:51:38]: Cannot assign "4": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:51:46]: Cannot assign "5": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:51:55]: Cannot assign "6": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:52:04]: Cannot assign "7": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:54:25]: Cannot assign "8": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:54:33]: Cannot assign "9": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:54:44]: Cannot assign "10": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:54:54]: Cannot assign "11": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:55:03]: Cannot assign "12": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:55:27]: Cannot assign "13": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:55:35]: Cannot assign "14": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:55:44]: Cannot assign "15": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:55:52]: Cannot assign "16": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:56:20]: Cannot assign "17": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:56:29]: Cannot assign "18": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:56:37]: (1062, "Duplicate entry 'pfbid02ucTuitLRVkrTicYa44wqJB5rnNpLgKUKhedVp993cV7wbcP8gzmu4YxeD' for key 'home_post.post_id'") 
+[2024-11-19 14:56:46]: Cannot assign "20": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:56:54]: (1062, "Duplicate entry 'pfbid0uM4rDXpN2crMCP5kPX4kLHkRVqh2NsirVEzEGzpbJZMdJvAtM3Z4LkebLA' for key 'home_post.post_id'") 
+[2024-11-19 14:57:02]: Cannot assign "22": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:57:10]: (1062, "Duplicate entry 'pfbid0GK1jqFwDvZdn9t6vas6sVqvqhnwk9DpD8kmbv8FpBrmZc6XPetCcoWdw8f' for key 'home_post.post_id'") 
+[2024-11-19 14:58:15]: Cannot assign "24": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:58:41]: Cannot assign "27": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:58:51]: (1062, "Duplicate entry 'pfbid02isCi4G4dHn5RwQy77XuSYD5kJ3iyxdvTF7DKnFFvckHLNZBXssEj5cXCY' for key 'home_post.post_id'") 
+[2024-11-19 14:59:20]: Cannot assign "29": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:59:29]: (1062, "Duplicate entry 'pfbid02U9qNpcZh1XhTFdL8Rvj4Dy5AdEkszcaJTWid1VghwYjH53CVQYyH8j36J' for key 'home_post.post_id'") 
+[2024-11-19 14:59:37]: Cannot assign "31": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 14:59:46]: (1062, "Duplicate entry 'pfbid02tYDRXN8tKoXHE6qbFhzw2K8nGq7AkC3xLpgue7DDGwTLc3cbynfwvJzZS' for key 'home_post.post_id'") 
+[2024-11-19 15:00:29]: Cannot assign "33": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:00:38]: Cannot assign "34": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:00:47]: Cannot assign "35": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:00:56]: Cannot assign "36": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:01:04]: Cannot assign "37": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:01:33]: Cannot assign "38": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:01:41]: (1062, "Duplicate entry 'pfbid02SeU2aUmzKCrm5cqdxvWrfwgvhaheCb3o4ELzy9Wj9h2VUX394KoN4x2aL' for key 'home_post.post_id'") 
+[2024-11-19 15:01:50]: Cannot assign "40": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:01:58]: (1062, "Duplicate entry 'pfbid0YgV9wFbqAyBta7A4eyze9fqRgNvFXEDP1SsE6ivVeW3BQgJSRQQaoDwr8a' for key 'home_post.post_id'") 
+[2024-11-19 15:02:32]: Cannot assign "42": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:02:40]: (1062, "Duplicate entry 'pfbid02wQsR7sW4riDS1JU237n7whHw4eCcA1jF9YXuKPjEgM41whTfZVLaH8emg' for key 'home_post.post_id'") 
+[2024-11-19 15:02:49]: Cannot assign "44": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:02:58]: Cannot assign "45": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:03:06]: Cannot assign "46": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:03:17]: Cannot assign "47": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:04:08]: Cannot assign "51": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:04:18]: (1062, "Duplicate entry 'pfbid02a3miPAe3jfby2bPr71ZDfuUSQbsDYUrzk1rd7u7NYMZVQh5VR8z2P9iiJ' for key 'home_post.post_id'") 
+[2024-11-19 15:12:09]: Cannot assign "53": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:12:18]: Cannot assign "54": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:12:27]: Cannot assign "55": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:12:36]: Cannot assign "56": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:12:46]: Cannot assign "57": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:13:10]: Cannot assign "58": "Comment.post_id" must be a "Post" instance. 
+[2024-11-19 15:16:52]: (1062, "Duplicate entry 'pfbid02GP44xmbpgaBhFe1MUGnN6GcRX8HmeN3z4gHVRV6XKysjAZSxnqFLN3xVw' for key 'home_post.post_id'") 
+[2024-11-19 15:17:17]: (1062, "Duplicate entry 'pfbid02HUqD5tj71jhZhjFcSn93qJDp28pPrudrtwhzy3Zx5VmMgto5fH3fDPban' for key 'home_post.post_id'") 
+[2024-11-19 15:23:39]: (1366, "Incorrect string value: '\\xF0\\x9D\\x91\\xAA\\xF0\\x9D...' for column 'user_name' at row 1") 
+[2024-11-19 15:23:47]: (1366, "Incorrect string value: '\\xF0\\x9D\\x91\\xAA\\xF0\\x9D...' for column 'user_name' at row 1") 
+[2024-11-19 15:23:56]: (1366, "Incorrect string value: '\\xF0\\x9D\\x91\\xAA\\xF0\\x9D...' for column 'user_name' at row 1") 
+[2024-11-19 15:24:05]: (1366, "Incorrect string value: '\\xF0\\x9D\\x91\\xAA\\xF0\\x9D...' for column 'user_name' at row 1") 
+[2024-11-19 15:28:36]: (1062, "Duplicate entry 'pfbid0nMF39erx3ZZRfxWkyFi6DYjEDxDN4iQ3nCG3fDwBL7UsUiomp4o32yDTEx' for key 'home_post.post_id'") 
+[2024-11-19 15:29:37]: (1062, "Duplicate entry 'pfbid02hLdi38cWDn4CSn3sbk2KDwQbHHHpkTW2PYAvvSmYMzDR3ruXRcznRrPeR' for key 'home_post.post_id'") 
+[2024-11-19 15:30:19]: (1062, "Duplicate entry 'pfbid0jRe3eukxHdSytqJDSXD6jP1zU6Ayh81e41qBwqrBX4CJAVjkXvt8aUuTtn' for key 'home_post.post_id'") 
+[2024-11-19 15:30:37]: (1062, "Duplicate entry 'pfbid0HCn9HKgPyKVRPt8pqcqa4gQBnD8h83aaXT2euTN56X1DF8wNCshJAdGGfN' for key 'home_post.post_id'") 
+[2024-11-19 15:31:04]: (1062, "Duplicate entry 'pfbid02uaptyr1oa2kipxEKtctM6uVY2LqEcftU832kLXRzoXB4CXMbEy9754VTQ' for key 'home_post.post_id'") 
+[2024-11-19 15:33:56]: (1062, "Duplicate entry 'pfbid0P1Fmhk22HDkL2eU9UhMDPZt6zmrf13F2R8aJVJ27h8Z2AnT8mvWuEXotRo' for key 'home_post.post_id'") 
+[2024-11-19 15:34:45]: (1062, "Duplicate entry 'pfbid02bHCGjiEetUQo1e8kZ4tunPmfUodnMmhxWZyQhpwGET9Fyrxdjqi95h29G' for key 'home_post.post_id'") 
+[2024-11-19 15:35:18]: (1062, "Duplicate entry 'pfbid02He1HEv8AzYzvWhTEcrP9UD1RgUVRVWdCBv6UEBQduZ3HM4cbkaTi6yGoP' for key 'home_post.post_id'") 
+[2024-11-19 15:35:56]: (1062, "Duplicate entry 'pfbid02CNetvFtKGuykj7u4hShskquUxdZozXEj7SgwoTkxFCE9n46Tpgfu5QEHf' for key 'home_post.post_id'") 
+[2024-11-19 15:36:51]: (1062, "Duplicate entry 'pfbid02DBPvkzurcg1c1WsRCk52a5PMi5wGTvB2WYgQtn9AHC5PjPp8iqxZt65e9' for key 'home_post.post_id'") 
+[2024-11-19 15:37:07]: (1062, "Duplicate entry 'pfbid02DBPvkzurcg1c1WsRCk52a5PMi5wGTvB2WYgQtn9AHC5PjPp8iqxZt65e9' for key 'home_post.post_id'") 
+[2024-11-19 15:37:25]: (1062, "Duplicate entry 'pfbid026rLj9qFLNEiEwU3CqSYyQuYgTigjmJVHMugz6mEXtmG8EL56Sq9QtFwUA' for key 'home_post.post_id'") 
+[2024-11-19 15:39:02]: (1366, "Incorrect string value: '\\xF0\\x9D\\x97\\xA5\\xF0\\x9D...' for column 'content' at row 1") 
+[2024-11-19 15:39:12]: (1366, "Incorrect string value: '\\xF0\\x9D\\x97\\xA5\\xF0\\x9D...' for column 'content' at row 1") 
+[2024-11-19 15:39:21]: (1366, "Incorrect string value: '\\xF0\\x9D\\x97\\xA5\\xF0\\x9D...' for column 'content' at row 1") 
+[2024-11-19 15:39:36]: (1366, "Incorrect string value: '\\xF0\\x9D\\x97\\xA5\\xF0\\x9D...' for column 'content' at row 1") 
+[2024-11-19 15:39:46]: (1366, "Incorrect string value: '\\xF0\\x9D\\x97\\xA5\\xF0\\x9D...' for column 'content' at row 1") 
+[2024-11-19 15:43:37]: (1062, "Duplicate entry 'pfbid0GuXKN4nuT62hWuXkXkUm1Ug911LT89ejWU3ybHXgRVjf23obwQPD8uxR7q' for key 'home_post.post_id'") 
+[2024-11-19 15:46:17]: (1062, "Duplicate entry 'pfbid0ZDq4oRD9cTWMxUbHpaU6qRwAxJAxmu8eKnkZywkhrXgEmJ8X7RxPiHfbHi' for key 'home_post.post_id'") 
+[2024-11-19 15:46:36]: (1062, "Duplicate entry 'pfbid0tqMx6QXfWaiSyqXGiy1Aj8tDce1rXcsBGWpmDe6gi6wCSR4BrZrG2AuVFs' for key 'home_post.post_id'") 
+[2024-11-19 15:46:45]: (1062, "Duplicate entry 'pfbid0tqMx6QXfWaiSyqXGiy1Aj8tDce1rXcsBGWpmDe6gi6wCSR4BrZrG2AuVFs' for key 'home_post.post_id'") 
+[2024-11-19 15:52:12]: (1062, "Duplicate entry 'pfbid0MZP7i6P7HwB2zEjcZLc8cDHNr22h1J8pESyaWEXEMbP5Af69AXiL4aw5vb' for key 'home_post.post_id'") 
+[2024-11-19 15:53:02]: (1062, "Duplicate entry 'pfbid02kaoVB6P5xmjQAnP7U6Rn8ApyBoMsWSS6DVHosCp1zW57xMfa7YNpLKta2' for key 'home_post.post_id'") 
+[2024-11-19 15:53:36]: (1062, "Duplicate entry 'pfbid04vjFPvoq182K43PMPVJqYryCncePLFLJigZc3hjzD8AiFprSp9cjChcsfN' for key 'home_post.post_id'") 
+[2024-11-19 15:53:54]: (1062, "Duplicate entry 'pfbid02xkQfUXixABAe9fvwqS2p91iJKaMjPV36Pq1Npmi85h665J4bH1E1cXYDC' for key 'home_post.post_id'") 
+[2024-11-19 15:54:36]: (1366, "Incorrect string value: '\\xF0\\x9D\\x9A\\x97s\\xD0...' for column 'content' at row 1") 
+[2024-11-19 15:54:45]: (1366, "Incorrect string value: '\\xF0\\x9D\\x91\\xBA\\xF0\\x9D...' for column 'content' at row 1") 
+[2024-11-19 15:54:54]: (1366, "Incorrect string value: '\\xF0\\x9D\\x91\\xBA\\xF0\\x9D...' for column 'content' at row 1") 
+[2024-11-19 15:55:14]: (1062, "Duplicate entry 'pfbid0VBga4u4MBpjSGfLby1UZPEK4RxHe8Wm44HTsUS3jaAUS97jbX31VNzxJKy' for key 'home_post.post_id'") 
+[2024-11-19 15:56:12]: (1062, "Duplicate entry 'pfbid02rhQb9A1JP4s15Xxg8WbBgPwc4WU59riUDU37FYTRNUCRMrnPpznScqJBY' for key 'home_post.post_id'") 
+[2024-11-19 15:56:43]: (1062, "Duplicate entry 'pfbid02M74YRGEMxmo2xGeUfRK8TGpaQKQSGMt9P9NQWLav79oT9VRB41ofd6FLW' for key 'home_post.post_id'") 
+[2024-11-19 15:57:35]: (1062, "Duplicate entry 'pfbid02DhYAQwDer288jCRvUWHoyLZXpu4eeBmrGFa36nJXyT4SySLt5Vc7nPv9z' for key 'home_post.post_id'") 
+[2024-11-19 15:57:52]: (1062, "Duplicate entry 'pfbid02QbKRwNMsTmJG5NgpFPxyAx3J7wcLMGR3tV2UcLAHa4EPSsTWPKdBUGhoW' for key 'home_post.post_id'") 
+[2024-11-19 15:58:08]: (1062, "Duplicate entry 'pfbid0XNoZeoa1ou1vVdB4bfo4mNgsdoUEsioKrbFGR7JQDnoqVUCF1PrY7QtUQ8' for key 'home_post.post_id'") 
+[2024-11-19 15:58:25]: (1062, "Duplicate entry 'pfbid0yrjZR8ANQDHkhw44Q5oHK8ZV9vaYUb7KgVUjMXpFky7WxXB2kLH81W5DhW' for key 'home_post.post_id'") 
+[2024-11-19 16:17:44]: (1062, "Duplicate entry 'pfbid03hJh3PDDrKVvYhbHqB2WemWsZNWnfDgdgJ24JSouZMCHrzU2pu2EHdsQYn' for key 'home_post.post_id'") 
+[2024-11-19 16:18:01]: (1062, "Duplicate entry 'pfbid02vRLi61rHr6oxRJgqULkSmPmepRhwJbGCxkLVDDL6gAodBz9jNfmANgKCz' for key 'home_post.post_id'") 
+[2024-11-19 16:18:27]: (1062, "Duplicate entry 'pfbid0LGuCdsep9QEHbAKhtbBh6ZdrN4sE77XDvPKkZh43N6ZurtgiQ19RrjziB6' for key 'home_post.post_id'") 
+[2024-11-19 16:19:04]: (1062, "Duplicate entry 'pfbid0ZQK9YsfWjcCdSRzgirvfcomngeQJEqSabeRptZPSaqaP1aEqPFwkXhJjET' for key 'home_post.post_id'") 
+[2024-11-19 16:19:22]: (1062, "Duplicate entry 'pfbid02fp4f9XtBUbWXVWTVkj1eWmeTmLpuwi62AoypoYEhYmdVTr58sEJUvCU1L' for key 'home_post.post_id'") 
+[2024-11-19 16:19:38]: (1062, "Duplicate entry 'pfbid06D6q5wnMDsjTPN3Z1WLbUEnhjRTFNM7BoM5M2YxrG8weiEVfQXkj28Juxu' for key 'home_post.post_id'") 
+[2024-11-19 16:19:54]: (1062, "Duplicate entry 'pfbid02S2Y5doU8syhDKaFTUYfz7UTws9K2yMMqMonj4riwCQzDMEaYhZKPgSpmx' for key 'home_post.post_id'") 
+[2024-11-19 16:26:42]: (1366, "Incorrect string value: '\\xF0\\x9D\\x97\\xA5\\xF0\\x9D...' for column 'content' at row 1") 
+[2024-11-19 16:26:51]: (1366, "Incorrect string value: '\\xF0\\x9D\\x97\\xA5\\xF0\\x9D...' for column 'content' at row 1") 
+[2024-11-19 16:27:00]: (1366, "Incorrect string value: '\\xF0\\x9D\\x97\\xA5\\xF0\\x9D...' for column 'content' at row 1") 
+[2024-11-19 16:27:10]: (1366, "Incorrect string value: '\\xF0\\x9D\\x97\\xA5\\xF0\\x9D...' for column 'content' at row 1") 
+[2024-11-19 16:27:18]: (1366, "Incorrect string value: '\\xF0\\x9D\\x97\\xA5\\xF0\\x9D...' for column 'content' at row 1") 
+[2024-11-19 16:34:00]: (1062, "Duplicate entry 'pfbid02P6pkkrcNCHsTiWjzwGaqMQJBDoCZLFxZ68Vv2BiGHSyputQzQi7j6Rwbg' for key 'home_post.post_id'") 
+[2024-11-19 16:34:28]: (1062, "Duplicate entry 'pfbid02gRSwBCRAGRsSYfb7WLCoBoTXKMLneuRNuKMRYKf2rAwQ4qATtciVhf1fp' for key 'home_post.post_id'") 
+[2024-11-19 16:34:36]: (1062, "Duplicate entry 'pfbid02gRSwBCRAGRsSYfb7WLCoBoTXKMLneuRNuKMRYKf2rAwQ4qATtciVhf1fp' for key 'home_post.post_id'") 
+[2024-11-19 16:34:46]: (1062, "Duplicate entry 'pfbid028yRMaEqLdtmei1wGnCSiULzLDNMaoSz19HJobELX7R9bkgPpNjXpjXWnP' for key 'home_post.post_id'") 
+[2024-11-19 16:36:24]: (1062, "Duplicate entry 'pfbid02N2TwB8f46Yas2PqgdTzS3jhjVK4G2n4u4vPv2M2kyPwB3A5qMKZxMorKq' for key 'home_post.post_id'") 
+[2024-11-19 16:36:30]: (1062, "Duplicate entry 'pfbid02LAEnFXMVvNmtmQ5PJvMJsSM8D6EsogRJ7RsVdFNmXsYnQYVifDRWLgUL1' for key 'home_post.post_id'") 
+[2024-11-19 16:36:38]: (1062, "Duplicate entry 'pfbid02LAEnFXMVvNmtmQ5PJvMJsSM8D6EsogRJ7RsVdFNmXsYnQYVifDRWLgUL1' for key 'home_post.post_id'") 
+[2024-11-19 16:36:54]: (1062, "Duplicate entry 'pfbid02cC421oXaDp68fXZqqBatTQqap7uXe2yqVVUfPL4dWFdw66csc6ydSusDV' for key 'home_post.post_id'") 
+[2024-11-19 16:37:12]: (1062, "Duplicate entry 'pfbid0YS54qjcgU5TPhFQpp4W4w8BsG5B6w837jtLjcPRvVqqM49LZ8dYxpmfVfu' for key 'home_post.post_id'") 
+[2024-11-19 16:37:12]: (1062, "Duplicate entry 'pfbid0o45ztDVZRAJvUqoscmxdRPr2DrGUQdwXRHzRJz9AyKsATJyf6WTeAhJ6Xq' for key 'home_post.post_id'") 
+[2024-11-19 16:37:28]: (1062, "Duplicate entry 'pfbid0351yAqDEghbdqXfjQbCQBCaHG3iRrqmQsHyZz6bf9ugXM8MdufnkAHzyBb' for key 'home_post.post_id'") 

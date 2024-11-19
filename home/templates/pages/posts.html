@@ -1,0 +1,118 @@
+{% extends "pages/base.html" %}
+
+{% block title %}
+    Danh sách bài viết
+{% endblock %}
+
+{% block content %}
+<h2 class='text-center alert alert-success'>Danh sách bài viết</h2>
+<div class='d-flex justify-content-between mb-3'>
+    <div>
+        <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm bài viết...">
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Facebook</th>
+            <th>Nội dung</th>
+            <th>Cảm xúc</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody id="postList">
+        <!-- Dữ liệu bài viết sẽ được tải vào đây -->
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" href="#" id="prevPage">Trước</a></li>
+        <li class="page-item"><a class="page-link" href="#" id="nextPage">Sau</a></li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function() {
+            var currentPage = 1;
+
+            function loadPosts(page, query = '') {
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "api_posts" %}',
+                    data: {
+                        page: page,
+                        search: query
+                    },
+                    success: function(response) {
+                        let content = response.posts.map(post => {
+                            return `<tr>
+                                <td>${post.id}</td>
+                                <td><a href='${post.link_facebook}'>Facebook</a></td>
+                                <td style="max-width: 200px;">${post.content}</td>
+                                <td>
+                                    <span>Cảm xúc: ${post.like}</span><br>
+                                    <span>Bình luận: ${post.comment}</span><br>
+                                    <span>Chia sẻ: ${post.share}</span><br>
+                                </td>
+                                <td>${!post.up ? 'Chưa đăng' : 'Đã đăng'}</td>
+                            </tr>`;
+                        })
+                        $('#postList').html(content);
+                    },
+                    error: function(xhr) {
+                        $('#postList').html('<tr><td colspan="4" class="text-danger">Không thể tải danh sách bài viết.</td></tr>');
+                    }
+                });
+            }
+
+            $('#crawlButton').click(function() {
+                var button = $(this);
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "run_crawl" %}',
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.is_running) {
+                            button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Đang lấy');
+                        } else {
+                            button.html('Lấy dữ liệu');
+                            loadPosts(currentPage);
+                        }
+                    },
+                    error: function(xhr) {
+                        button.html('Lấy dữ liệu');
+                    }
+                });
+            });
+
+            $('#prevPage').click(function(e) {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadPosts(currentPage, $('#searchInput').val());
+                }
+            });
+
+            $('#nextPage').click(function(e) {
+                e.preventDefault();
+                currentPage++;
+                loadPosts(currentPage, $('#searchInput').val());
+            });
+
+            $('#searchInput').on('input', function() {
+                loadPosts(1, $(this).val());
+            });
+
+            loadPosts(currentPage);
+        });
+    </script>
+{% endblock %}
