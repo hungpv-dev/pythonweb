@@ -5,24 +5,35 @@
 {% endblock %}
 
 {% block content %}
-<h2 class='text-center alert alert-success'>Trang chủ</h2>
-<div class='d-flex justify-content-end'>
-    <button class='btn btn-primary' id="crawlButton">
-        {% if process_running %}
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Đang lấy
-        {% else %}
-            Lấy dữ liệu
-        {% endif %}
-    </button>
+<div class="content">
+    <nav class="mb-2" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        </ol>
+    </nav>
+    <h3 class="text-bold text-body-emphasis mb-5">Trang chủ</h3>
+    <div>
+        <div class='d-flex justify-content-end'>
+            <button id="crawlButton" class="btn btn-primary">
+                {% if process_running %}
+                    <span class="spinner-border spinner-border-sm" style="--phoenix-spinner-width: 0.8rem;--phoenix-spinner-height: 0.8rem" role="status" aria-hidden="true"></span>
+                    Đang lấy dữ liệu
+                {% else %}
+                    Lấy dữ liệu
+                {% endif %}
+            </button>
+        </div>
+    </div>
 </div>
+
 {% endblock %}
 
 {% block script %}
+    
     <script>
         $(document).ready(function() {
             $('#crawlButton').click(function() {
                 var button = $(this);
-                
                 $.ajax({
                     type: 'POST',
                     url: '{% url "run_crawl" %}',
@@ -31,8 +42,8 @@
                     },
                     success: function(response) {
                         if (response.is_running) {
-                            button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Đang lấy');
-                        }else{
+                            button.html('<span class="spinner-border spinner-border-sm" style="--phoenix-spinner-width: 0.8rem;--phoenix-spinner-height: 0.8rem" role="status" aria-hidden="true"></span> Đang lấy dữ liệu');
+                        } else {
                             button.html('Lấy dữ liệu');
                         }
                     },

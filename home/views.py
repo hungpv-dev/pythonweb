@@ -3,6 +3,7 @@ from django.http import JsonResponse
 import subprocess
 import psutil
 from .models import Post
+import math
 import json
 
 # Biến toàn cục để lưu trữ tiến trình
@@ -17,7 +18,13 @@ def index(request):
     })
 
 def post(request):
-    return render(request, 'pages/posts.html')
+    return render(request, 'pages/posts/index.html')
+
+def post_show(request,id):
+    post = Post.objects.get(id=id)
+    return render(request, 'pages/posts/show.html',{
+        'post': post
+    })
 
 def run_crawl(request):
     global current_process
@@ -42,19 +49,37 @@ def is_process_running(process_name):
 
 def api_posts(request):
     if request.method == 'GET':
+        limit = 10
         page = int(request.GET.get('page', 1))
-        per_page = int(request.GET.get('per_page', 10))
-        start = (page - 1) * per_page
-        end = start + per_page
-        total_posts = Post.objects.count()
-        posts = Post.objects.all().values()[start:end]
+        offset = (page - 1) * limit
+        counts = Post.objects.count()
+        to = offset + limit
+        to = min(to, counts)
+        posts = Post.objects.all().order_by('-id').values()[offset:to]
         return JsonResponse({
-            'total': total_posts,
-            'page': page,
-            'per_page': per_page,
-            'posts': list(posts)
+            'limit': limit,
+            'from': offset + 1,
+            'to': to,
+            'total': counts,
+            'totalPages': math.ceil(counts / limit),
+            'currentPage': page,
+            'url': request.build_absolute_uri().split('?')[0],
+            'currentUrl': request.build_absolute_uri(),
+            'params': '?' + request.META['QUERY_STRING'],
+            'all': bool(request.GET.get('show_all')),
+            'data': list(posts),
         }, safe=False)
     elif request.method == 'POST':
         data = json.loads(request.body)
         post = Post.objects.create(**data)
         return JsonResponse({'id': post.id}, status=201)
+    
+def api_post_detail(request, id):
+    try:
+        post = Post.objects.get(id=id)
+        post_data = {
+            field.name: getattr(post, field.name) for field in Post._meta.fields
+        }
+        return JsonResponse(post_data, safe=False)
+    except Post.DoesNotExist:
+        return JsonResponse({'error': 'Bài viết không tồn tại.'}, status=404)
