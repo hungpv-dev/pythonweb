@@ -18,37 +18,27 @@
 
         </div>
         <!-- Search -->
-        <div id="searchModel" class="d-none">
-            <form class="d-flex align-items-center gap-3 flex-wrap mb-4" id="filter-form">
-                <div>
+        <div id="searchModel">
+            <form class="d-flex align-items-center gap-2 flex-wrap mb-2" id="filter-form" style="margin-top: -27px;">
+                <div class="w-100 w-md-auto">
                     <input type="text" name="dates" class="form-control value empty">
                 </div>
-                <div>
+                <div class="w-100 w-md-auto">
                     <input name="finish_at" type="text" placeholder="Ngày hoàn thành"
                         data-options='{"mode":"range","disableMobile":true,"dateFormat":"d-m-Y","maxDate": "today","locale":"vn","shorthandCurrentMonth": true}'
                         class="form-control value empty datetimepicker">
                 </div>
-
-                <div>
-                    <select name="customer_id" class="form-select value empty ">
-                        <option value="">Khách hàng</option>
-                    </select>
-                </div>
-                <div>
-                    <select name="city_id" class="form-select value empty ">
-                        <option value="">Khu vực</option>
-                    </select>
-                </div>
-                <div class="d-flex justify-content-start">
-                    <button type="submit" class="btn btn-lg btn-phoenix-info btn-filter me-2" title="Lọc">
-                        <span class="fas fa-filter text-info fs-9 me-2"></span>Lọc
+                <div class="d-flex justify-content-start w-100 w-md-auto" style="height: 36px;margin-left: 20px;">
+                    <button type="submit" class="btn btn-sm btn-phoenix-info btn-filter me-1" title="Lọc">
+                        <span class="fas fa-filter text-info fs-9 me-1"></span>Lọc
                     </button>
-                    <button button class="btn btn-lg btn-phoenix-warning" onclick="removeFilter(this)" type="button">Xoá
-                        lọc</button>
+                    <button class="btn btn-sm btn-phoenix-warning" style="margin-left: 8px;" onclick="removeFilter(this)" type="button">Xoá lọc</button>
                 </div>
             </form>
             <div class="d-flex justify-content-end align-items-center">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModel">Thêm mới</button>
+                <button class="btn btn-primary" onclick="window.location.href='https://www.facebook.com/login'">
+                    <span class="fas fa-plus"></span> Thêm tài khoản
+                </button>
             </div>
         </div>
         <!-- Table -->
@@ -59,17 +49,16 @@
                     <thead>
                         <tr>
                             <th class="align-middle text-center text-uppercase">stt</th>
-                            <th class="align-middle text-start text-uppercase">Facebook</th>
-                            <th class="align-middle text-start text-uppercase">Nội dung</th>
-                            <th class="align-middle text-start text-uppercase">Cảm xúc</th>
-                            <th class="align-middle text-start text-uppercase">Trạng thái</th>
-                            <th class="align-middle text-center text-uppercase">Cập nhật</th>
+                            <th class="align-middle text-start text-uppercase">Tên tài khoản</th>
+                            <th class="align-middle text-start text-uppercase" style="width: 30%;">Link facebook</th>
+                            <th class="align-middle text-start text-uppercase" style="width: 30%;">Cookies</th>
+                            <th class="align-middle text-start text-uppercase" style="width: 10%;">Thao tác</th>
                         </tr>
                     </thead>
 
                     <tbody class="list-data" id="data_table_body">
                         <tr class="loading-data">
-                            <td class="text-center" colspan="15">
+                            <td class="text-center" colspan="5">
                                 <div class="spinner-border text-info spinner-border-sm" role="status"><span
                                         class="visually-hidden">Loading...</span>
                                 </div>
@@ -87,7 +76,7 @@
         <div class="modal-dialog">
             <div class="modal-content form-open">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Thêm mới đơn hàng</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm mới tài khoản</h5>
                     <button class="btn p-1 closeButton" type="button" data-bs-dismiss="modal" aria-label="Close">
                         <svg class="svg-inline--fa fa-xmark fs-9" aria-hidden="true" focusable="false" data-prefix="fas"
                             data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"

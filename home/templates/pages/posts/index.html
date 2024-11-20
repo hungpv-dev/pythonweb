@@ -9,10 +9,10 @@
     <nav class="mb-2" aria-label="breadcrumb">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-            <li class="breadcrumb-item">Đơn hàng</li>
+            <li class="breadcrumb-item">Bài viết</li>
         </ol>
     </nav>
-    <h3 class="text-bold text-body-emphasis mb-5">Danh sách đơn hàng</h3>
+    <h3 class="text-bold text-body-emphasis mb-5">Danh sách bài viết</h3>
     <div>
         <div class="mb-3 thongke">
 
@@ -82,12 +82,12 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="addModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="editModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-dialog">
             <div class="modal-content form-open">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Thêm mới đơn hàng</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Thông tin bài viết</h5>
                     <button class="btn p-1 closeButton" type="button" data-bs-dismiss="modal" aria-label="Close">
                         <svg class="svg-inline--fa fa-xmark fs-9" aria-hidden="true" focusable="false" data-prefix="fas"
                             data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
@@ -100,73 +100,40 @@
                 </div>
                 <div class="modal-body">
                     <form class="row g-3" method="POST">
-                        <div class="col-sm-12 col-md-6">
+                        <div class="col-sm-12 col-md-12">
                             <div class="form-floating">
-                                <select name="ward_id" class="form-select value validate" title="Phường xã">
-                                    <option value="">Chọn phường xã</option>
-                                    <option value="1">Phường xã 1</option>
-                                    <option value="2">Phường xã 2</option>
-                                    <option value="3">Phường xã 3</option>
-                                </select>
-                                <label class="floating-label-cus">Phường xã</label>
+                                <textarea name="content" class="form-control value empty" placeholder="Nội dung" style="height: 120px"></textarea>
+                                <label>Nội dung</label>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12">
+                            <div id="mediaPreview" class="d-flex flex-wrap mt-2"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
                             <div class="form-floating">
-                                <input type="text" name="address" class="form-control empty value"
-                                    placeholder="Địa chỉ chi tiết">
-                                <label>Địa chỉ chi tiết</label>
+                                <input type="text" name="like" disabled class="form-control value" placeholder="Cảm xúc">
+                                <label>Cảm xúc</label>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-6">
+                        <div class="col-sm-12 col-md-4">
                             <div class="form-floating">
-                                <input type="text" name="du_kien" oninput="formatBalance(event)"
-                                    class="form-control validate empty value" placeholder="Chi phí dự kiến">
-                                <label>Chi phí dự kiến</label>
+                                <input type="text" name="comment" disabled class="form-control value" placeholder="Bình luận">
+                                <label>Bình luận</label>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-6">
+                        <div class="col-sm-12 col-md-4">
                             <div class="form-floating">
-                                <select name="status_id" class="form-select empty value validate"
-                                    title="Trạng thái">
-                                    <option value="">Chọn trạng thái</option>
-                                    <option value="1">Trạng thái 1</option>
-                                    <option value="2">Trạng thái 2</option>
-                                    <option value="3">Trạng thái 3</option>
+                                <input type="text" name="share" disabled class="form-control value" placeholder="Chia sẻ">
+                                <label>Chia sẻ</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-floating">
+                                <select class='form-select' name='up'>
+                                    <option value=false>Chưa đăng</option>
+                                    <option value=true>Đã đăng</option>
                                 </select>
-                                <label class="floating-label-cus">Trạng thái</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <div class="form-floating">
-                                <input type="text" placeholder="Thời gian dự kiến" name="du_kien_time"
-                                    data-options='{"minDate":"today","dateFormat":"d-m-Y", "locale": "vn", "shorthandCurrentMonth": true}'
-                                    class="form-control datetimepicker value empty validate">
-                                <label>Thời gian dự kiến</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-12">
-                            <div class="form-floating">
-                                <select name="user_tk" multiple class="form-select empty validate value" title="Người thiết kế">
-                                    <option value="1">Nguyễn Văn A</option>
-                                    <option value="2">Trần Thị B</option>
-                                    <option value="3">Lê Văn C</option>
-                                    <option value="4">Phạm Thị D</option>
-                                    <option value="5">Hoàng Văn E</option>
-                                    <option value="6">Đỗ Thị F</option>
-                                    <option value="7">Ngô Văn G</option>
-                                    <option value="8">Vũ Thị H</option>
-                                    <option value="9">Bùi Văn I</option>
-                                    <option value="10">Đặng Thị K</option>
-                                </select>
-                                <label class="floating-label-cus">Người thiết kế</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-12">
-                            <div class="form-floating">
-                                <textarea name="note" style="height: 80px" class='form-control value empty'
-                                    placeholder="Ghi chú"></textarea>
-                                <label>Ghi chú</label>
+                                <label class='floating-label-cus'>Trạng thái</label>
                             </div>
                         </div>
                         <div class="col-12 gy-6">
@@ -175,8 +142,7 @@
                                     <button type="button" class="btn btn-close-model btn-secondary mx-1"
                                         data-bs-dismiss="modal">Huỷ
                                     </button>
-                                    <button type="submit" class="btn btn-primary btn-submit mx-1" title="Thêm mới">Thêm
-                                        mới</button>
+                                    <button type="submit" class="btn btn-primary btn-submit mx-1" title="Xác nhận">Xác nhận</button>
                                 </div>
                             </div>
                         </div>
@@ -218,6 +184,9 @@
                                     <button onclick='showOne(${item.id})' class='btn btn-edit-show btn-sm btn-phoenix-secondary text-info me-1 fs-10' title='Cập nhật' type='button' data-bs-toggle='modal' data-bs-target='#editModel'>
                                         <span class='fas far fa-edit'></span>
                                     </button>
+                                    <a target='_blank' href='${item.link_facebook}' class='btn btn-edit-show btn-sm btn-phoenix-secondary text-info me-1 fs-10' title='Đường dẫn tới facebook'>
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -245,6 +214,87 @@
             await request.get();
             searchModal.showValue(request.params);
             btnLoading(btn, false, 'Xóa lọc');
+        }
+
+        var editModel = new HandleForm('#editModel');
+        editModel.closeReset();
+        async function showOne(id) {
+            try {
+                let fetch = await axios.get(`/api/posts/${id}/`).then(res => res);
+                if (fetch.status == 200) {
+                    editModel.showValue(fetch.data);
+                    editModel.id = fetch.data.id;
+                    let mediaPreview = document.getElementById('mediaPreview');
+                    let media = JSON.parse(fetch.data.media)
+                    mediaPreview.innerHTML = media.images.map((mediaItem, index) => `
+                        <div class="media-item" style="position: relative; display: inline-block; margin: 5px;">
+                            <img src="${mediaItem}" alt="media" style="max-width: 300px; max-height: 300px; border-radius: 8px;">
+                            <button type="button" class="btn btn-danger btn-sm" style="position: absolute; top: 5px; right: 5px;" onclick="removeMediaItem(${index}, 'image')">Xóa</button>
+                        </div>
+                    `).join('') + media.videos.map((mediaItem, index) => `
+                        <div class="media-item" style="position: relative; display: inline-block; margin: 5px;">
+                            <video controls style="max-width: 300px; max-height: 300px; border-radius: 8px;">
+                                <source src="${mediaItem}" type="video/mp4">
+                                Trình duyệt của bạn không hỗ trợ thẻ video.
+                            </video>
+                            <button type="button" class="btn btn-danger btn-sm" style="position: absolute; top: 5px; right: 5px;" onclick="removeMediaItem(${index}, 'video')">Xóa</button>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                console.log(error)
+                let response = error.response;
+                if (response?.status == 404) {
+                    showErrorMD(response.data.message);
+                    editModel.hideModal();
+                    editModel.reset();
+                } else {
+                    showErrorMD('Có lỗi xảy ra, vui lòng thử lại sau!');
+                    editModel.hideModal();
+                    editModel.reset();
+                }
+            }
+        }
+        function removeMediaItem(index, type) {
+            let mediaPreview = document.getElementById('mediaPreview');
+            let mediaItems = Array.from(mediaPreview.getElementsByClassName('media-item'));
+            mediaItems[index].remove();
+            // Cập nhật lại dữ liệu media
+            let media = JSON.parse(editModel.value().get().media);
+            if (type === 'image') {
+                media.images.splice(index, 1);
+            } else if (type === 'video') {
+                media.videos.splice(index, 1);
+            }
+            editModel.value().set({ media: JSON.stringify(media) });
+        }
+        editModel.submit = async function(e) {
+            e.preventDefault();
+            let check = this.chec();
+            if (check) {
+                this.loading(true);
+                let value = this.value().formatPrice(['du_kien', 'thu_them']).get();
+                try {
+                    let res = await axios.put(`/api/orders/${editModel.id}`, value).then(res => res);
+                    if (res.status == 200) {
+                        editModel.reset();
+                        editModel.hideModal();
+                        showMessageMD(res.data.message);
+                        request.id = res.data.id;
+                        request.get();
+                    }
+                } catch (error) {
+                    let res = error.response;
+                    if (res.status == 422) {
+                        this.logError(res.data);
+                    } else {
+                        showErrorMD('Có lỗi xảy ra, vui lòng thử lại sau!');
+                        editModel.hideModal();
+                        editModel.reset();
+                    }
+                }
+                this.loading(false);
+            }
         }
     </script>
 {% endblock %}

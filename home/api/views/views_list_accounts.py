@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from ...models import User
 from django.http import JsonResponse
 from ..serializers import UserSerializer
+from ...utils import paginate
 import math
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -18,20 +19,8 @@ class UserViewSet(viewsets.ModelViewSet):
         counts = User.objects.count()
         to = offset + limit
         to = min(to, counts)
-        users = User.objects.all().order_by('-id').values()[offset:to]
-        return JsonResponse({
-            'limit': limit,
-            'from': offset + 1,
-            'to': to,
-            'total': counts,
-            'totalPages': math.ceil(counts / limit),
-            'currentPage': page,
-            'url': request.build_absolute_uri().split('?')[0],
-            'currentUrl': request.build_absolute_uri(),
-            'params': '?' + request.META['QUERY_STRING'],
-            'all': bool(request.GET.get('show_all')),
-            'data': list(users),
-        }, safe=False)
+        users = User.objects.all().order_by('-id')
+        return paginate(request, users)
 
     @action(detail=False, methods=['get'])
     def api_list_accounts(self, request):
@@ -55,3 +44,16 @@ class UserViewSet(viewsets.ModelViewSet):
             'params': '?' + request.META['QUERY_STRING'],
             'data': account_data,
         }, safe=False)
+
+    @action(detail=False, methods=['post'])
+    def add_accounts(self, request):
+        accounts_data = request.data.get('accounts', [])
+        created_accounts = []
+        for account_data in accounts_data:
+            serializer = UserSerializer(data=account_data)
+            if serializer.is_valid():
+                serializer.save()
+                created_accounts.append(serializer.data)
+            else:
+                return JsonResponse({'error': 'Dữ liệu không hợp lệ', 'details': serializer.errors}, status=400)
+        return JsonResponse({'message': 'Thêm tài khoản thành công', 'data': created_accounts}, status=201, safe=False)
