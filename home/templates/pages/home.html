@@ -36,7 +36,7 @@
                 var button = $(this);
                 $.ajax({
                     type: 'POST',
-                    url: '{% url "run_crawl" %}',
+                    url: '/api/posts/crawl/',
                     data: {
                         csrfmiddlewaretoken: '{{ csrf_token }}'
                     },

@@ -192,13 +192,12 @@
 
 {% block script %}
     <script>
-        const route = '/api/posts';
+        const route = '/api/posts/all';
         var request = new RequestServer(route);
         var searchModal = new HandleForm('#searchModel');
         request.colspan = 14;
         request.insert = function(data) {
             let content = data.map((item) => {
-                    console.log(item)
                     return `
                         <tr class="${request.bold(item.id)}">
                             <td class='align-middle text-center'>${request.index++}</td>
@@ -231,7 +230,6 @@
             await request.get();
             searchModal.showValue(request.params);
         });
-        searchModal.setChoice();
         searchModal.submit = async function(e) {
             e.preventDefault();
             this.loading(true);
