@@ -7,9 +7,9 @@ class Reset {
                 if(ele){
                     if(ele instanceof Choices){
                         if (ele.passedElement.element.hasAttribute("multiple")) {
-                            this.choices[nameSelect]?.removeActiveItems();
+                            ele?.removeActiveItems();
                         } else {
-                            this.choices[nameSelect]?.setChoiceByValue("");
+                            ele?.setChoiceByValue("");
                         }
                     }else{
                         ele.value = ''
@@ -315,7 +315,7 @@ class Form extends Reset {
             if (ele) {
                 if (ele.tagName.toLowerCase() == "select") {
                     let checkChoice = ele.hasAttribute("data-choice");
-                    if (checkChoice && Object.keys(this.choices).length > 0) {
+                    if (checkChoice) {
                         let dataSet = value[name];
                         if (ele.hasAttribute("multiple")) {
                             dataSet = dataSet.map(item => {
@@ -324,7 +324,7 @@ class Form extends Reset {
                         } else {
                             dataSet = String(dataSet);
                         }
-                        this.choices[name].setChoiceByValue(dataSet);
+                        this.elements[name].setChoiceByValue(dataSet);
                     } else {
                         ele.value = value[name];
                     }

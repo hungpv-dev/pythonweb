@@ -34,6 +34,7 @@
         $(document).ready(function() {
             $('#crawlButton').click(function() {
                 var button = $(this);
+                button.prop('disabled', true);
                 $.ajax({
                     type: 'POST',
                     url: '/api/posts/crawl/',
@@ -46,10 +47,12 @@
                         } else {
                             button.html('Lấy dữ liệu');
                         }
+                        button.prop('disabled', false);
                     },
                     error: function(xhr) {
                         var errorResponse = JSON.parse(xhr.responseText);
                         button.html('Lấy dữ liệu');
+                        button.prop('disabled', false);
                     }
                 });
             });
