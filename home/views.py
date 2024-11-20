@@ -10,6 +10,9 @@ def index(request):
 def post(request):
     return render(request, 'pages/posts/index.html')
 
+def list_accounts(request):
+    return render(request, 'pages/users/list_accounts.html')
+
 def api_posts(request):
     if request.method == 'GET':
         # Logic để lấy danh sách bài viết
@@ -17,7 +20,9 @@ def api_posts(request):
     elif request.method == 'POST':
         # Logic để tạo bài viết mới
         pass
-    
+def api_list_accounts(request):
+    if request.method == 'GET':
+        pass
 # from django.shortcuts import render
 # from django.http import JsonResponse
 # import subprocess

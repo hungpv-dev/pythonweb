@@ -1,0 +1,250 @@
+{% extends "pages/base.html" %}
+
+{% block title %}
+    Danh sách tài khoản
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <nav class="mb-2" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item">Danh sách tài khoản</li>
+        </ol>
+    </nav>
+    <h3 class="text-bold text-body-emphasis mb-5">Danh sách tài khoản</h3>
+    <div>
+        <div class="mb-3 thongke">
+
+        </div>
+        <!-- Search -->
+        <div id="searchModel" class="d-none">
+            <form class="d-flex align-items-center gap-3 flex-wrap mb-4" id="filter-form">
+                <div>
+                    <input type="text" name="dates" class="form-control value empty">
+                </div>
+                <div>
+                    <input name="finish_at" type="text" placeholder="Ngày hoàn thành"
+                        data-options='{"mode":"range","disableMobile":true,"dateFormat":"d-m-Y","maxDate": "today","locale":"vn","shorthandCurrentMonth": true}'
+                        class="form-control value empty datetimepicker">
+                </div>
+
+                <div>
+                    <select name="customer_id" class="form-select value empty ">
+                        <option value="">Khách hàng</option>
+                    </select>
+                </div>
+                <div>
+                    <select name="city_id" class="form-select value empty ">
+                        <option value="">Khu vực</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-start">
+                    <button type="submit" class="btn btn-lg btn-phoenix-info btn-filter me-2" title="Lọc">
+                        <span class="fas fa-filter text-info fs-9 me-2"></span>Lọc
+                    </button>
+                    <button button class="btn btn-lg btn-phoenix-warning" onclick="removeFilter(this)" type="button">Xoá
+                        lọc</button>
+                </div>
+            </form>
+            <div class="d-flex justify-content-end align-items-center">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModel">Thêm mới</button>
+            </div>
+        </div>
+        <!-- Table -->
+        <div class="mx-n4 mx-lg-n6 px-4 px-lg-6 mb-9 bg-body-emphasis border-y mt-2 position-relative top-1"
+            id="list_users_container">
+            <div class="table-responsive quote-table-container scrollbar ms-n1 ps-1">
+                <table class="table table-hover table-sm fs-9 mb-0">
+                    <thead>
+                        <tr>
+                            <th class="align-middle text-center text-uppercase">stt</th>
+                            <th class="align-middle text-start text-uppercase">Facebook</th>
+                            <th class="align-middle text-start text-uppercase">Nội dung</th>
+                            <th class="align-middle text-start text-uppercase">Cảm xúc</th>
+                            <th class="align-middle text-start text-uppercase">Trạng thái</th>
+                            <th class="align-middle text-center text-uppercase">Cập nhật</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="list-data" id="data_table_body">
+                        <tr class="loading-data">
+                            <td class="text-center" colspan="15">
+                                <div class="spinner-border text-info spinner-border-sm" role="status"><span
+                                        class="visually-hidden">Loading...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="paginations"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog">
+            <div class="modal-content form-open">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm mới đơn hàng</h5>
+                    <button class="btn p-1 closeButton" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <svg class="svg-inline--fa fa-xmark fs-9" aria-hidden="true" focusable="false" data-prefix="fas"
+                            data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
+                            data-fa-i2svg="">
+                            <path fill="currentColor"
+                                d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3" method="POST">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-floating">
+                                <select name="ward_id" class="form-select value validate" title="Phường xã">
+                                    <option value="">Chọn phường xã</option>
+                                    <option value="1">Phường xã 1</option>
+                                    <option value="2">Phường xã 2</option>
+                                    <option value="3">Phường xã 3</option>
+                                </select>
+                                <label class="floating-label-cus">Phường xã</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-floating">
+                                <input type="text" name="address" class="form-control empty value"
+                                    placeholder="Địa chỉ chi tiết">
+                                <label>Địa chỉ chi tiết</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-floating">
+                                <input type="text" name="du_kien" oninput="formatBalance(event)"
+                                    class="form-control validate empty value" placeholder="Chi phí dự kiến">
+                                <label>Chi phí dự kiến</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-floating">
+                                <select name="status_id" class="form-select empty value validate"
+                                    title="Trạng thái">
+                                    <option value="">Chọn trạng thái</option>
+                                    <option value="1">Trạng thái 1</option>
+                                    <option value="2">Trạng thái 2</option>
+                                    <option value="3">Trạng thái 3</option>
+                                </select>
+                                <label class="floating-label-cus">Trạng thái</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-floating">
+                                <input type="text" placeholder="Thời gian dự kiến" name="du_kien_time"
+                                    data-options='{"minDate":"today","dateFormat":"d-m-Y", "locale": "vn", "shorthandCurrentMonth": true}'
+                                    class="form-control datetimepicker value empty validate">
+                                <label>Thời gian dự kiến</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-floating">
+                                <select name="user_tk" multiple class="form-select empty validate value" title="Người thiết kế">
+                                    <option value="1">Nguyễn Văn A</option>
+                                    <option value="2">Trần Thị B</option>
+                                    <option value="3">Lê Văn C</option>
+                                    <option value="4">Phạm Thị D</option>
+                                    <option value="5">Hoàng Văn E</option>
+                                    <option value="6">Đỗ Thị F</option>
+                                    <option value="7">Ngô Văn G</option>
+                                    <option value="8">Vũ Thị H</option>
+                                    <option value="9">Bùi Văn I</option>
+                                    <option value="10">Đặng Thị K</option>
+                                </select>
+                                <label class="floating-label-cus">Người thiết kế</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-floating">
+                                <textarea name="note" style="height: 80px" class='form-control value empty'
+                                    placeholder="Ghi chú"></textarea>
+                                <label>Ghi chú</label>
+                            </div>
+                        </div>
+                        <div class="col-12 gy-6">
+                            <div class="row g-3 justify-content-center">
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-close-model btn-secondary mx-1"
+                                        data-bs-dismiss="modal">Huỷ
+                                    </button>
+                                    <button type="submit" class="btn btn-primary btn-submit mx-1" title="Thêm mới">Thêm
+                                        mới</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const route = '/api/users/all';
+        var request = new RequestServer(route);
+        var searchModal = new HandleForm('#searchModel');
+        request.colspan = 14;
+        request.insert = function(data) {
+            let content = data.map((item) => {
+                    return `
+                        <tr class="${request.bold(item.id)}">
+                            <td class='align-middle text-center'>${request.index++}</td>
+                            <td class='align-middle text-start'><a href='${item.link_facebook}'>Facebook</a></td>
+                            <td class='align-middle text-start'>${item.content}</td>
+                            <td class='align-middle text-start'>
+                                <div>
+                                    <span>Cảm xúc: ${item.like}</span><br>
+                                    <span>Bình luận: ${item.comment}</span><br>
+                                    <span>Chia sẻ: ${item.share}</span>
+                                </div>
+                            </td>
+                            <td class='align-middle text-start'>
+                                ${Status.up(item.up)}
+                            </td>
+                            <td class='align-middle text-center'>
+                                <div class='position-relative'>
+                                    <button onclick='showOne(${item.id})' class='btn btn-edit-show btn-sm btn-phoenix-secondary text-info me-1 fs-10' title='Cập nhật' type='button' data-bs-toggle='modal' data-bs-target='#editModel'>
+                                        <span class='fas far fa-edit'></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                })
+                .join('');
+            return content;
+        }
+        document.addEventListener('DOMContentLoaded', async function() {
+            await request.get();
+            searchModal.showValue(request.params);
+        });
+        searchModal.submit = async function(e) {
+            e.preventDefault();
+            this.loading(true);
+            let value = this.value().get();
+            request.params = value;
+            await request.get();
+            this.loading(false, `<span class='fas fa-filter text-info fs-9 me-2'></span>Lọc`);
+        }
+        async function removeFilter(btn) {
+            btnLoading(btn, true);
+            searchModal.reset();
+            request.params = {};
+            await request.get();
+            searchModal.showValue(request.params);
+            btnLoading(btn, false, 'Xóa lọc');
+        }
+    </script>
+{% endblock %}
