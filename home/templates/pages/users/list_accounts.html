@@ -1,0 +1,234 @@
+{% extends "pages/base.html" %}
+
+{% block title %}
+    Danh sách tài khoản
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <nav class="mb-2" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item">Danh sách tài khoản</li>
+        </ol>
+    </nav>
+    <h3 class="text-bold text-body-emphasis mb-5">Danh sách tài khoản</h3>
+    <div>
+        <div class="mb-3 thongke">
+
+        </div>
+        <!-- Search -->
+        <div id="searchModel">
+            <form class="d-flex align-items-center gap-2 flex-wrap mb-2" id="filter-form" style="margin-top: -27px;">
+                <div class="w-100 w-md-auto">
+                    <input type="text" name="dates" class="form-control value empty">
+                </div>
+                <div class="w-100 w-md-auto">
+                    <input name="finish_at" type="text" placeholder="Ngày hoàn thành"
+                        data-options='{"mode":"range","disableMobile":true,"dateFormat":"d-m-Y","maxDate": "today","locale":"vn","shorthandCurrentMonth": true}'
+                        class="form-control value empty datetimepicker">
+                </div>
+                <div class="d-flex justify-content-start w-100 w-md-auto" style="height: 36px;margin-left: 20px;">
+                    <button type="submit" class="btn btn-sm btn-phoenix-info btn-filter me-1" title="Lọc">
+                        <span class="fas fa-filter text-info fs-9 me-1"></span>Lọc
+                    </button>
+                    <button class="btn btn-sm btn-phoenix-warning" style="margin-left: 8px;" onclick="removeFilter(this)" type="button">Xoá lọc</button>
+                </div>
+            </form>
+            <div class="d-flex justify-content-end align-items-center">
+                <button class="btn btn-primary" onclick="window.location.href='https://www.facebook.com/login'">
+                    <span class="fas fa-plus"></span> Thêm tài khoản
+                </button>
+            </div>
+        </div>
+        <!-- Table -->
+        <div class="mx-n4 mx-lg-n6 px-4 px-lg-6 mb-9 bg-body-emphasis border-y mt-2 position-relative top-1"
+            id="list_users_container">
+            <div class="table-responsive quote-table-container scrollbar ms-n1 ps-1">
+                <table class="table table-hover table-sm fs-9 mb-0">
+                    <thead>
+                        <tr>
+                            <th class="align-middle text-center text-uppercase">stt</th>
+                            <th class="align-middle text-center text-uppercase">Tên tài khoản</th>
+                            <th class="align-middle text-start text-uppercase" style="width: 40%;">Link facebook</th>
+                            {% comment %} <th class="align-middle text-start text-uppercase" style="width: 30%;">Cookies</th> {% endcomment %}
+                            <th class="align-middle text-center text-uppercase" style="width: 20%;">Thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="list-data" id="data_table_body">
+                        <tr class="loading-data">
+                            <td class="text-center" colspan="5">
+                                <div class="spinner-border text-info spinner-border-sm" role="status"><span
+                                        class="visually-hidden">Loading...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="paginations"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog">
+            <div class="modal-content form-open">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sửa tài khoản</h5>
+                    <button class="btn p-1 closeButton" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <svg class="svg-inline--fa fa-xmark fs-9" aria-hidden="true" focusable="false" data-prefix="fas"
+                            data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
+                            data-fa-i2svg="">
+                            <path fill="currentColor"
+                                d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3" method="put" id="edit-form">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-floating">
+                                <input type="text" name="name" class="form-control empty value"
+                                    placeholder="Tên tài khoản" id="edit-name">
+                                <label>Tên tài khoản</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-floating">
+                                <input type="text" name="link" 
+                                    class="form-control validate empty value" placeholder="Link facebook" id="edit-link">
+                                <label>Link facebook</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-floating" >
+                                <textarea name="cookie" style="height: 100px;"
+                                    class="form-control validate empty value" placeholder="Cookie" id="edit-cookie"></textarea>
+                                <label>Cookie</label>
+                            </div>
+                        </div>
+                        <div class="col-12 gy-6">
+                            <div class="row g-3 justify-content-center">
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-close-model btn-secondary mx-1"
+                                        data-bs-dismiss="modal">Huỷ
+                                    </button>
+                                    <button type="submit" class="btn btn-primary btn-submit mx-1" title="Sửa tài khoản">Lưu</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                {% comment %} Hàm lấy dữ liệu hiển thị lên ô input {% endcomment %}
+                <script>
+                    function showOne(accountId) {
+                        // Fetch the account data using the accountId
+                        fetch(`/api/users/${accountId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                // Populate the form fields with the fetched data
+                                document.getElementById('edit-name').value = data.name;
+                                document.getElementById('edit-link').value = data.link;
+                                document.getElementById('edit-cookie').value = data.cookie;
+
+                                // Add event listener for the update button
+                                document.querySelector('.btn-submit').onclick = function() {
+                                    updateAccount(accountId);
+                                };
+                            })
+                            .catch(error => console.error('Lỗi lấy dữ liệu:', error));
+                    }
+
+                    function updateAccount(accountId) {
+                        const name = document.getElementById('edit-name').value;
+                        const link = document.getElementById('edit-link').value;
+                        const cookie = document.getElementById('edit-cookie').value;
+
+                        fetch(`/api/users/${accountId}/update_account/`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ name, link, cookie }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                console.error('Error updating account:', data.error);
+                                showMessageMD('Cập nhật tài khoản thất bại', 'danger');
+                            } else {
+                                console.log('Account updated successfully:', data);
+                                showMessageMD('Cập nhật tài khoản thành công', 'success');
+                                // Optionally, refresh the account list or close the modal
+                                fetchAccounts();
+                                document.querySelector('.btn-close-model').click();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error updating account:', error);
+                            showMessageMD('Có lỗi xảy ra khi cập nhật tài khoản', 'danger');
+                        });
+                    }
+                </script>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded and parsed');
+            fetchAccounts();
+            document.getElementById('filter-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                fetchAccounts();
+            });
+        });
+
+        async function fetchAccounts() {
+            try {
+                console.log('Fetching accounts...');
+                const formData = new FormData(document.getElementById('filter-form'));
+                const params = new URLSearchParams(formData).toString();
+                const response = await fetch(`/api/users/api_list_accounts?${params}`);
+                const data = await response.json();
+                console.log('Data received:', data);
+                const tableBody = document.getElementById('data_table_body');
+                tableBody.innerHTML = ''; // Xóa dữ liệu cũ
+
+                data.data.forEach((account, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class='align-middle text-center'>${index + 1}</td>
+                        <td class='align-middle text-center'>${account.name}</td>
+                        <td class='align-middle text-start'><a href='${account.link}'>${account.link}</a></td>
+                        <td class='align-middle text-center'>
+                            <div class='position-relative'>
+                                <button onclick='showOne(${account.id})' class='btn btn-edit-show btn-sm btn-phoenix-secondary text-info me-1 fs-10' title='Cập nhật' type='button' data-bs-toggle='modal' data-bs-target='#editModel'>
+                                    <span class='fas far fa-edit'></span>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching accounts:', error);
+            }
+        }
+
+        async function removeFilter(btn) {
+            btnLoading(btn, true);
+            document.getElementById('filter-form').reset();
+            fetchAccounts();
+            btnLoading(btn, false, 'Xóa lọc');
+        }
+    </script>
+{% endblock %}
