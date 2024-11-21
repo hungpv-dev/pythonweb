@@ -220,5 +220,30 @@
 <script src='{% static "js/daterangepicker.min.js" %}'></script>
 <script src='{% static "js/custom.js" %}'></script>
 <script src='{% static "js/customClass.js" %}'></script>
+<script>
+    axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    axios.interceptors.request.use(function (config) {
+        config.headers['X-CSRFToken'] = getCookie('csrftoken');
+        return config;
+    }, function (error) {
+        return Promise.reject(error);
+    });
+</script>
 {% block script %}{% endblock %}
 </html>

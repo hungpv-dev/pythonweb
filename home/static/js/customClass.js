@@ -728,10 +728,12 @@ class HandleConfirm {
 
 class Status {
     static up(up) {
-        if (!!up) {
-            return `<span class='badge fs-10 bg-primary-subtle text-primary-emphasis'>Đã đăng</span>`;
+        if (up == 0) {
+            return `<span class='badge fs-10 bg-danger-subtle text-danger-emphasis'>Chưa đăng</span>`;
+        }else if(up == 1){
+            return `<span class='badge fs-10 bg-info-subtle text-info-emphasis'>Chờ đăng</span>`;
         }
-        return `<span class='badge fs-10 bg-warning-subtle text-warning-emphasis'>Chưa đăng</span>`;
+        return `<span class='badge fs-10 bg-success-subtle text-success-emphasis'>Đã đăng</span>`;
     }
 }
 

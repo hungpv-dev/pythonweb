@@ -4,6 +4,9 @@ from django.http import JsonResponse
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 import os
+from .models import Post
+from .utils import compact
+
 
 def index(request):
     process_running = False
@@ -39,3 +42,4 @@ def start_virtual_browser(request):
         return JsonResponse({'status': 'success', 'message': 'Virtual browser started'})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
+    return render(request, 'pages/posts/index.html',compact('up','crawl'))
