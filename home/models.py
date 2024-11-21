@@ -9,7 +9,7 @@ class Post(models.Model):
     like = models.CharField(max_length=50, default='0')
     comment = models.CharField(max_length=50, default='0')
     share = models.CharField(max_length=50, default='0')
-    up = models.BooleanField(default=False)
+    up = models.IntegerField(default=0)
     link_up = models.TextField(null=True)
     user_id = models.IntegerField(default=0)
     page_up_id = models.IntegerField(default=0)
@@ -18,7 +18,7 @@ class Post(models.Model):
 class Page(models.Model):
     link = models.CharField(max_length=155)
     type = models.CharField(max_length=55, null=True, default='Chủ đề')
-    type_page = models.IntegerField(default=1)
+    type_page = models.IntegerField(default=1, db_comment='1: Page lấy dữ liệu, 2: Page đăng bài')
     user_id = models.IntegerField(null=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -30,5 +30,13 @@ class Comment(models.Model):
 
 class User(models.Model):
     name = models.IntegerField(null=True)
+    code = models.CharField(null=True,max_length=155)
     link = models.CharField(max_length=155)
+    type = models.IntegerField(max_length=1, default=1, db_comment='1: User lấy dữ liệu, 2: User đăng bài')
     cookie = models.JSONField(null=True)
+
+class PagePost(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    page = models.ForeignKey(Page, on_delete=models.CASCADE)
+    status = models.IntegerField(max_length=1, default=1, db_comment='1: Chưa thực thi, 2: Đã thực thi')
+    created_at = models.DateTimeField(auto_now_add=True)

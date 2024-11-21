@@ -10,14 +10,14 @@ def is_process_running(process_name):
     return False
 
 def paginate(request,model):
-    limit = 10
+    limit = int(request.GET.get('limit',10))
     page = int(request.GET.get('page', 1))
     offset = (page - 1) * limit
     counts = model.count()
     to = offset + limit
     to = min(to, counts)
-    posts = model.all().values()[offset:to]
-    return JsonResponse({
+    data = list(model.all().values()[offset:to])
+    return {
         'limit': limit,
         'from': offset + 1,
         'to': to,
@@ -28,5 +28,8 @@ def paginate(request,model):
         'currentUrl': request.build_absolute_uri(),
         'params': '?' + request.META['QUERY_STRING'],
         'all': bool(request.GET.get('show_all')),
-        'data': list(posts),
-    }, safe=False)
+        'data': data,
+    }
+
+def compact(*args):
+    return {item: globals().get(item) for item in args}
