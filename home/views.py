@@ -17,7 +17,11 @@ def index(request):
     })
 
 def post(request):
-    return render(request, 'pages/posts/index.html',compact('up','crawl'))
+    return render(request, 'pages/posts/index.html')
+
+def page(request):
+    return render(request, 'pages/fanpages/index.html')
+
 
 def list_accounts(request):
     return render(request, 'pages/users/list_accounts.html')

@@ -22,7 +22,9 @@ class PaegViewSet(viewsets.ModelViewSet):
             model = model.filter(type_page=request.GET.get('type_page'))
             
         if 'name' in request.GET:
-            model = model.filter(link__icontains=request.GET.get('name'))
+            if 'name' in request.GET:
+                search_value = request.GET.get('name')
+                model = model.filter(link__icontains=search_value) | model.filter(type_page__icontains=search_value)
             
         response = paginate(request, model)
         if find:

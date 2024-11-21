@@ -48,6 +48,13 @@
             </ul>
             <ul class="navbar-nav navbar-nav-top" data-dropdown-on-hover="data-dropdown-on-hover">
                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle lh-1" href="{% url 'pages' %}">
+                        <span class="uil fs-9 me-2 fas fa-list-alt"></span>Danh sách fanpage
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-top" data-dropdown-on-hover="data-dropdown-on-hover">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle lh-1" href="{% url 'posts' %}">
                         <span class="uil fs-9 me-2 fas fa-file-alt"></span>Danh sách bài viết
                     </a>
@@ -118,18 +125,6 @@
         </ul>
     </nav>
     {% block content %}{% endblock %}
-    {% comment %} <footer class="footer position-absolute">
-        <div class="row g-0 justify-content-between align-items-center h-100">
-            <div class="col-12 col-sm-auto text-center">
-                <p class="mb-0 mt-2 mt-sm-0 text-body">Sản phẩm được phát triển bởi<a class="mx-1"
-                        href="https://asfy.vn">ASFY TECH</a>
-                    <span class="d-none d-sm-inline-block"></span><span
-                        class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none" /> &copy;
-                    <?php echo date('Y'); ?>
-                </p>
-            </div>
-        </div>
-    </footer> {% endcomment %}
     <div class="modal fade" id="modalSuccessNotification" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content border border-translucent shadow-lg">

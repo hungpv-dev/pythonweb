@@ -9,7 +9,7 @@ class Post(models.Model):
     like = models.CharField(max_length=50, default='0')
     comment = models.CharField(max_length=50, default='0')
     share = models.CharField(max_length=50, default='0')
-    up = models.IntegerField(default=0)
+    up = models.IntegerField(default=0,db_comment='0: Chờ duyệt, 1: Đã duyệt, 2: Đã huỷ')
     link_up = models.TextField(null=True)
     user_id = models.IntegerField(default=0)
     page_up_id = models.IntegerField(default=0)

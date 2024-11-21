@@ -735,6 +735,13 @@ class Status {
         }
         return `<span class='badge fs-10 bg-success-subtle text-success-emphasis'>Đã đăng</span>`;
     }
+
+    static page(type) {
+        if (type == 1) {
+            return `<span class='badge fs-10 bg-danger-subtle text-danger-emphasis'>Lấy dữ liệu</span>`;
+        }
+        return `<span class='badge fs-10 bg-success-subtle text-success-emphasis'>Đăng bài</span>`;
+    }
 }
 
 

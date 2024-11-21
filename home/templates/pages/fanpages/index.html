@@ -1,0 +1,358 @@
+{% extends "pages/base.html" %}
+
+{% block title %}
+    Danh sách bài viết
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <nav class="mb-2" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item">Bài viết</li>
+        </ol>
+    </nav>
+    <h3 class="text-bold text-body-emphasis mb-5">Danh sách bài viết</h3>
+    <div>
+        <!-- Search -->
+        <div id="searchModel">
+            <form class="d-flex align-items-center gap-3 flex-wrap mb-4" id="filter-form">
+                <div>
+                    <input type="text" name="link" class="form-control" placeholder="Tìm kiếm page">
+                </div>
+                <div>
+                    <select name="up" class="form-select value empty">
+                        <option value="">Loại page</option>
+                        <option value=1>Lấy dữ liệu</option>
+                        <option value=2>Đăng bài</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-start">
+                    <button type="submit" class="btn btn-phoenix-info btn-filter me-2" title="Lọc">
+                        <span class="fas fa-filter text-info fs-9 me-2"></span>Lọc
+                    </button>
+                    <button button class="btn btn-phoenix-warning" onclick="removeFilter(this)" type="button">Xoá
+                        lọc</button>
+                </div>
+            </form>
+        </div>
+        <!-- Table -->
+        <div class="mx-n4 mx-lg-n6 px-4 px-lg-6 mb-9 bg-body-emphasis border-y mt-2 position-relative top-1"
+            id="list_users_container">
+            <div class="table-responsive quote-table-container scrollbar ms-n1 ps-1">
+                <table class="table table-hover table-sm fs-9 mb-0">
+                    <thead>
+                        <tr>
+                            <th class="align-middle text-center text-uppercase">stt</th>
+                            <th class="align-middle text-start text-uppercase">Chủ đề</th>
+                            <th class="align-middle text-start text-uppercase">đường dẫn</th>
+                            <th class="align-middle text-start text-uppercase">loại</th>
+                            <th class="align-middle text-start text-uppercase">tài khoản</th>
+                            <th class="align-middle text-center text-uppercase">thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="list-data" id="data_table_body">
+                        <tr class="loading-data">
+                            <td class="text-center" colspan="15">
+                                <div class="spinner-border text-info spinner-border-sm" role="status"><span
+                                        class="visually-hidden">Loading...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="paginations"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content form-open">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin bài viết</h5>
+                <button class="btn p-1 closeButton" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <svg class="svg-inline--fa fa-xmark fs-9" aria-hidden="true" focusable="false" data-prefix="fas"
+                        data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
+                        data-fa-i2svg="">
+                        <path fill="currentColor"
+                            d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3" method="POST" enctype="multipart/form-data">
+                    <div class="col-sm-12 col-md-12">
+                        <p class='text-end m-0 p-0'>
+                            Thời điểm lấy: <span class='text-info fw-bold' id='timegetpost'></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-floating">
+                            <textarea name="content" class="form-control value empty" placeholder="Nội dung" style="height: 120px">Đây là nội dung mẫu cho bài viết của bạn. Hãy chỉnh sửa để phù hợp với thông điệp bạn muốn truyền tải.</textarea>
+                            <label>Nội dung</label>
+                        </div>
+                    </div>
+                    <div id="fileList" class="d-flex flex-wrap mt-2">
+                    </div>
+                    <div class='d-flex justify-content-around align-items-center' style="padding: 10px; background-color: #f0f2f5; border-radius: 8px;">
+                        <div class="d-flex align-items-center" style="cursor: pointer;">
+                            <i class="fas fa-thumbs-up me-2" style="color: #3b5998; font-size: 16px;"></i>
+                            <span id="likeCount" style="color: #3b5998; font-weight: bold; font-size: 14px;">0</span>
+                        </div>
+                        <div class="d-flex align-items-center" style="cursor: pointer;">
+                            <i class="fas fa-comment me-2" style="color: #ff6600; font-size: 16px;"></i>
+                            <span id="commentCount" style="color: #ff6600; font-weight: bold; font-size: 14px;">0</span>
+                        </div>
+                        <div class="d-flex align-items-center" style="cursor: pointer;">
+                            <i class="fas fa-share me-2" style="color: #00aced; font-size: 16px;"></i>
+                            <span id="shareCount" style="color: #00aced; font-weight: bold; font-size: 14px;">0</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 d-flex justify-content-end">
+                        <a href='' target='_blank' id='facebookLink' class='btn btn-edit-show btn-sm btn-phoenix-secondary text-info me-1 fs-10'>
+                            <i class="fab fa-facebook-f"></i>    
+                        </a>
+                        <label for="fileInputs" class='btn btn-edit-show btn-sm btn-phoenix-secondary text-info me-1 fs-10'>
+                            <i class="fas fa-paperclip"></i>    
+                        </label>
+                        <input type="file" name="media" class="form-control d-none" id="fileInputs" multiple>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="form-floating">
+                            <select name="up" class="form-select value empty">
+                                <option value=0>Chưa đăng</option>
+                                <option value=1>Chờ đăng</option>
+                                <option value=2>Đã đăng</option>
+                            </select>
+                            <label class='floating-label-cus'>Trạng thái</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-9">
+                        <div class="form-floating">
+                            <select name="page_up_id" class="form-select value empty">
+                            </select>
+                            <label class='floating-label-cus'>Đăng lên</label>
+                        </div>
+                    </div>
+                    <div class="col-12 gy-6">
+                        <div class="row g-3 justify-content-center">
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-close-model btn-secondary mx-1"
+                                    data-bs-dismiss="modal">Huỷ
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-submit mx-1" title="Xác nhận">Xác nhận</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const route = '/api/pages/all';
+        var request = new RequestServer(route);
+        var searchModal = new HandleForm('#searchModel');
+        request.colspan = 14;
+        const images = "";
+        request.insert = function(data) {
+            console.log(data)
+            let content = data.map((item) => {
+                    return `
+                        <tr class="${request.bold(item.id)}">
+                            <td class='align-middle text-center'>${request.index++}</td>
+                            <td class='align-middle text-start'>${item.type}</td>
+                            <td class='align-middle text-start'>
+                                <a href='${item.link}' target='_blank'>${item.link}</a>
+                            </td>
+                            <td class='align-middle text-start'>
+                                ${Status.page(item.type_page)}
+                            </td>
+                            <td class='align-middle text-start'>
+                                Phạm Văn Hùng
+                            </td>
+                            <td class='align-middle text-center'>
+                                <div class='position-relative'>
+                                    <button onclick='showOne(${item.id})' class='btn btn-edit-show btn-sm btn-phoenix-secondary text-info me-1 fs-10' title='Cập nhật' type='button' data-bs-toggle='modal' data-bs-target='#editModel'>
+                                        <span class='fas far fa-edit'></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                })
+                .join('');
+            return content;
+        }
+        document.addEventListener('DOMContentLoaded', async function() {
+            await request.get();
+            searchModal.showValue(request.params);
+        });
+        searchModal.submit = async function(e) {
+            e.preventDefault();
+            this.loading(true);
+            let value = this.value().get();
+            request.params = value;
+            await request.get();
+            this.loading(false, `<span class='fas fa-filter text-info fs-9 me-2'></span>Lọc`);
+        }
+        async function removeFilter(btn) {
+            btnLoading(btn, true);
+            searchModal.reset();
+            request.params = {};
+            await request.get();
+            await getPages(1);
+            btnLoading(btn, false, 'Xóa lọc');
+        }
+
+        var editModel = new HandleForm('#editModel');
+        editModel.closeReset();
+
+        
+        async function showOne(id) {
+            try {
+                let fetch = await axios.get(`/api/posts/${id}/`).then(res => res);
+                if (fetch.status == 200) {
+                    editModel.id = fetch.data.id;
+                    editModel.page_id = fetch.data.page_id;
+                    editModel.elements.content.value = fetch.data.content;
+                    editModel.elements.up.setChoiceByValue(String(fetch.data.up));
+                    getPages(2,'',fetch.data.page_up_id)
+                    $("#likeCount").text(fetch.data.like)
+                    $("#facebookLink").attr('href',fetch.data.link_facebook)
+                    $("#timegetpost").text(dateTimeFormat(fetch.data.created_at,'d-m-Y H:i:s'))
+                    $("#shareCount").text(fetch.data.share)
+                    $("#commentCount").text(fetch.data.comment)
+                    let media = JSON.parse(fetch.data.media);
+                    let contentImage = '';
+                    for (const mediaItem of media.images) {
+                        contentImage += `
+                            <div class="file-item">
+                                <img data-http=true src="${mediaItem}" alt="Sample Image 1">
+                                <button onclick="removeImage(this)" class='btn remove-btn btn-edit-show btn-sm btn-phoenix-secondary text-danger fs-10' type='button'>
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                    }
+                    $("#fileList").html(contentImage)
+                }
+            } catch (error) {
+                let response = error.response;
+                if (response?.status == 404) {
+                    showErrorMD(response.data.message);
+                    editModel.hideModal();
+                    editModel.reset();
+                } else {
+                    showErrorMD('Có lỗi xảy ra, vui lòng thử lại sau!');
+                    editModel.hideModal();
+                    editModel.reset();
+                }
+            }
+        }
+        editModel.submit = async function(e) {
+            e.preventDefault();
+            this.loading(true);
+            let formData = new FormData();
+            const files = document.querySelector('input[type="file"]').files;
+            for (let i = 0; i < files.length; i++) {
+                formData.append('media', files[i]); 
+            }
+            formData.append('content', this.elements.content.value);
+            formData.append('page_id', this.page_id);
+            formData.append('post_id_web', this.id);
+            formData.append('up', this.elements.up.getValue().value);
+            formData.append('page_up_id', this.elements.page_up_id.getValue().value);
+            let hrefs = [];
+            $('.file-item').map((i, item) => {
+                let imgEle = $(item).find('img')
+                if(imgEle && imgEle[0]?.hasAttribute('data-http')){
+                    let href = imgEle[0].src
+                    hrefs.push(href);
+                }
+            })
+            formData.append('hrefs', JSON.stringify(hrefs));
+            try {
+                let res = await axios.post(`/api/posts/edit/`,formData,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+                if (res.status == 200) {
+                    console.log(res.data)
+                    /*
+                    editModel.reset();
+                    editModel.hideModal();
+                    showMessageMD(res.data.message);
+                    request.id = res.data.id;
+                    request.get();
+                    */
+                } 
+            } catch (error) {
+                console.log(error)
+                let res = error.response;
+                if (res.status == 422) {
+                    this.logError(res.data);
+                } else {
+                    showErrorMD('Có lỗi xảy ra, vui lòng thử lại sau!');
+                    editModel.hideModal();
+                    editModel.reset();
+                }
+            }
+            this.loading(false);
+        }
+    </script>
+    <script>
+        async function getPages(type_page = 1, name = '', selectedId = 0){
+            let ele = null;
+            if(type_page === 1){
+                ele = searchModal.elements['page_id']
+            }else{
+                ele = editModel.elements['page_up_id']
+            }
+            let res = await axios.get('/api/pages/all/?limit=100',{params: {
+                ...request.params,
+                type_page,
+                name
+            }})
+            if(res.status == 200){
+                let data = res.data.data
+                ele._handleLoadingState();
+                let choiceData = data.map(item => {
+                    return {
+                        value: item.id,
+                        label: item.link,
+                        selected: (selectedId || request.params?.page_id) == item.id
+                    }
+                })
+                choiceData.unshift({
+                    value: '',
+                    label: 'Chọn fanpage',
+                    selected: true
+                })
+                ele.setChoices(choiceData, 'value', 'label', true)
+                ele.input.element.focus();
+                ele._handleLoadingState(false);
+
+            }
+        }
+
+        var myTimeOut = null;
+        $("#pagefilter").on('search', function (event) {
+            let query = event.detail.value.trim();
+            clearTimeout(myTimeOut);
+            myTimeOut = setTimeout(() => {
+                getPages(1,query)
+            }, 500);
+        });
+
+    </script>
+{% endblock %}
