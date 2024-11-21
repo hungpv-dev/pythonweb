@@ -7,8 +7,8 @@ from .views.pages import PaegViewSet
 
 router = DefaultRouter()
 router.register(r'posts', PostViewSet)
-router.register(r'pages', PaegViewSet)
 router.register(r'users', UserViewSet)
+router.register(r'pages', PaegViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
