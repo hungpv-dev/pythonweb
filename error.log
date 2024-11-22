@@ -90,4 +90,27 @@ Stacktrace:
 	(No symbol) [0x00007FF6A8CF0149]
 	BaseThreadInitThunk [0x00007FFE020F7374+20]
 	RtlUserThreadStart [0x00007FFE0229CC91+33]
+!Lỗi khi lấy Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=131.0.6778.86)
+Stacktrace:
+	GetHandleVerifier [0x00007FF7142A38A5+3004357]
+	(No symbol) [0x00007FF713F39970]
+	(No symbol) [0x00007FF713DE582A]
+	(No symbol) [0x00007FF713DBFA75]
+	(No symbol) [0x00007FF713E62C77]
+	(No symbol) [0x00007FF713E7B351]
+	(No symbol) [0x00007FF713E5B983]
+	(No symbol) [0x00007FF713E27628]
+	(No symbol) [0x00007FF713E28791]
+	GetHandleVerifier [0x00007FF7142CA00D+3161901]
+	GetHandleVerifier [0x00007FF71431E060+3506048]
+	GetHandleVerifier [0x00007FF71431400D+3465005]
+	GetHandleVerifier [0x00007FF714090EEB+830987]
+	(No symbol) [0x00007FF713F4467F]
+	(No symbol) [0x00007FF713F409D4]
+	(No symbol) [0x00007FF713F40B6D]
+	(No symbol) [0x00007FF713F30149]
+	BaseThreadInitThunk [0x00007FFB5F6A259D+29]
+	RtlUserThreadStart [0x00007FFB6128AF38+40]
 !

@@ -48,6 +48,13 @@
             </ul>
             <ul class="navbar-nav navbar-nav-top" data-dropdown-on-hover="data-dropdown-on-hover">
                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle lh-1" href="{% url 'data' %}">
+                        <span class="uil fs-9 me-2 fas fa-database"></span>Xử lý dữ liệu
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-top" data-dropdown-on-hover="data-dropdown-on-hover">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle lh-1" href="{% url 'pages' %}">
                         <span class="uil fs-9 me-2 fas fa-list-alt"></span>Danh sách fanpage
                     </a>
@@ -215,7 +222,9 @@
 <script src='{% static "js/daterangepicker.min.js" %}'></script>
 <script src='{% static "js/custom.js" %}'></script>
 <script src='{% static "js/customClass.js" %}'></script>
+<script src='{% static "js/moment.local.js" %}'></script>
 <script>
+    moment.locale('vi');
     axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
     function getCookie(name) {

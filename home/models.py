@@ -31,6 +31,7 @@ class Comment(models.Model):
 class User(models.Model):
     name = models.IntegerField(null=True)
     code = models.CharField(null=True,max_length=155)
+    pid = models.CharField(max_length=55, null=True)
     link = models.CharField(max_length=155)
     type = models.IntegerField(max_length=1, default=1, db_comment='1: User lấy dữ liệu, 2: User đăng bài')
     cookie = models.JSONField(null=True)

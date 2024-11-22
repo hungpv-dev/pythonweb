@@ -16,3 +16,5 @@
 [2024-11-21 16:00:18]: (1062, "Duplicate entry 'pfbid0XEWDRsVLw6GjKEr9QUSMRUxJGPMUmQBi9p18mMc3ubZJathD7YEurvKjPf' for key 'home_post.post_id'") 
 [2024-11-21 16:01:11]: (1062, "Duplicate entry 'pfbid0Hc9jWQ7UAU5xm8uWxHZYQzfhm5MaxyFyEAhnyk4qFN3jVqcWZ6fuFGDs1o' for key 'home_post.post_id'") 
 [2024-11-21 16:01:37]: (1062, "Duplicate entry 'pfbid0xuhBMT4ABTxPLmBuY7KXo1NcptRe4m7F4ARoNyWspcTrpppFg5bLxky1rR' for key 'home_post.post_id'") 
+[2024-11-22 10:03:08]: (1062, "Duplicate entry 'pfbid0iucCFeV8fZRTzk74mP4Cfp6wETAE9WENtG4HUtK63PzLipEpbFqhtjQ87e' for key 'home_post.post_id'") 
+[2024-11-22 10:04:10]: (1062, "Duplicate entry 'pfbid0SwPxgpaXAN8CPssTih41A4mRcLkFddVGH7uYevFnE4J8YhFCS3qh2pyo5B' for key 'home_post.post_id'") 

@@ -35,6 +35,30 @@
         border-radius: 10px;
         cursor: pointer;
     }
+    .comments-section {
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 8px;
+    }
+    .comment {
+        padding: 5px 15px;
+        border-radius: 15px;
+        background-color: #f0f2f5;
+        margin-bottom: 10px;
+    }
+    .comment p{
+        padding: 0;
+        margin: 0;
+    }
+    .comments-title { 
+        font-weight: bold;
+        font-size: 16px;
+    }
+    .comment-author { 
+    }
+    
+    .comment-text {
+    }
 </style>
 <div class="content">
     <nav class="mb-2" aria-label="breadcrumb">
@@ -180,6 +204,13 @@
                             </div>
                         </div>
                     </div>
+                <div class="comments-section" id='listComments'>
+                    <h5 class="comments-title">Bình luận</h5>
+                    <div class="comment">
+                        <p class="comment-author text-info">Nguyễn Văn A</p>
+                        <p class="comment-text">Bài viết rất hay!</p>
+                    </div>
+                </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -256,6 +287,7 @@
         const images = "";
         request.insert = function(data) {
             let content = data.map((item) => {
+                    const time = moment(item.created_at);
                     return `
                         <tr class="${request.bold(item.id)}">
                             <td class='align-middle text-center'>${request.index++}</td>
@@ -271,7 +303,7 @@
                                 ${Status.up(item.up)}
                             </td>
                             <td class='align-middle text-start'>
-                                ${dateTimeFormat(item.created_at,'Y-m-d H:i:s')}
+                                ${time.fromNow()}
                             </td>
                             <td class='align-middle text-center'>
                                 <div class='position-relative'>
@@ -327,7 +359,7 @@
         }
         async function showOne(id) {
             try {
-                let fetch = await axios.get(`/api/posts/${id}/`).then(res => res);
+                let fetch = await axios.get(`/api/posts/show/?post_id_web=${id}`).then(res => res);
                 if (fetch.status == 200) {
                     editModel.id = fetch.data.id;
                     editModel.page_id = fetch.data.page_id;
@@ -336,7 +368,7 @@
                     getPages(2,'',fetch.data.page_up_id)
                     $("#likeCount").text(fetch.data.like)
                     $("#facebookLink").attr('href',fetch.data.link_facebook)
-                    $("#timegetpost").text(dateTimeFormat(fetch.data.created_at,'d-m-Y H:i:s'))
+                    $("#timegetpost").text(moment(fetch.data.created_at).fromNow())
                     $("#shareCount").text(fetch.data.share)
                     $("#commentCount").text(fetch.data.comment)
                     let media = JSON.parse(fetch.data.media);
@@ -352,8 +384,19 @@
                         `;
                     }
                     $("#fileList").html(contentImage)
+
+                    let contentComment = fetch.data.comments.map(item => {
+                        return `
+                            <div class="comment">
+                                <p class="comment-author text-info">${item.author}</p>
+                                <p class="comment-text">${item.text}</p>
+                            </div>
+                        `;
+                    })
+                    $("#listComments").html(contentComment)
                 }
             } catch (error) {
+                console.log(error)
                 let response = error.response;
                 if (response?.status == 404) {
                     showErrorMD(response.data.message);

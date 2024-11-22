@@ -147,7 +147,7 @@ class Form extends Reset {
         let show = false;
         if(messages.length > 0){
             show = true;
-            mess = `${attribute} ${messages[0]}`;
+            mess = `${ele.title} ${messages[0]}`;
         }
         this.changeValidateMessage(ele,show,mess)
         return show;

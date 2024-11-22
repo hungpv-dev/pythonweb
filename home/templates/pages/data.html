@@ -1,0 +1,240 @@
+{% extends "pages/base.html" %}
+
+{% block title %}
+    Xử lý dữ liệu
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <nav class="mb-2" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item">Dữ liệu</li>
+        </ol>
+    </nav>
+    <h3 class="text-bold text-body-emphasis mb-5">Xử lý dữ liệu</h3>
+    <div>
+        <!-- Search -->
+        <div id="searchModel">
+            <form class="d-flex align-items-center gap-3 flex-wrap mb-4" id="filter-form">
+                <div>
+                    <input type="text" name="name" class="form-control" placeholder="Tìm kiếm tài khoản">
+                </div>
+                <div>
+                    <select name="type" class="form-select value empty">
+                        <option value="">Loại tài khoản</option>
+                        <option value=1>Lấy dữ liệu</option>
+                        <option value=2>Đăng bài</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-start">
+                    <button type="submit" class="btn btn-phoenix-info btn-filter me-2" title="Lọc">
+                        <span class="fas fa-filter text-info fs-9 me-2"></span>Lọc
+                    </button>
+                    <button button class="btn btn-phoenix-warning" onclick="removeFilter(this)" type="button">Xoá
+                        lọc</button>
+                </div>
+            </form>
+        </div>
+        <!-- Table -->
+        <div class="mx-n4 mx-lg-n6 px-4 px-lg-6 mb-9 bg-body-emphasis border-y mt-2 position-relative top-1"
+            id="list_users_container">
+            <div class="table-responsive quote-table-container scrollbar ms-n1 ps-1">
+                <table class="table table-hover table-sm fs-9 mb-0">
+                    <thead>
+                        <tr>
+                            <th class="align-middle text-center text-uppercase">stt</th>
+                            <th class="align-middle text-start text-uppercase">Mã</th>
+                            <th class="align-middle text-start text-uppercase">Tài khoản</th>
+                            <th class="align-middle text-start text-uppercase">Loại</th>
+                            <th class="align-middle text-center text-uppercase">thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="list-data" id="data_table_body">
+                        <tr class="loading-data">
+                            <td class="text-center" colspan="15">
+                                <div class="spinner-border text-info spinner-border-sm" role="status"><span
+                                        class="visually-hidden">Loading...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="paginations"></div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const route = '/api/users/all/';
+        var request = new RequestServer(route);
+        var searchModal = new HandleForm('#searchModel');
+        for ( name in searchModal.validate){
+            let type = searchModal.validate[name];
+            if(type){
+                if (Array.isArray(type) && type.includes('required')) {
+                    delete searchModal.validate[name];
+                }
+            }
+        }
+        request.colspan = 14;
+        request.insert = function(data) {
+            let content = data.map((item) => {
+                return `
+                    <tr class="${request.bold(item.id)}">
+                        <td class='align-middle text-center'>${request.index++}</td>
+                        <td class='align-middle text-start'>${item.code}</td>
+                        <td class='align-middle text-start'>
+                            <a href='${item.link}' target='_blank'>${item.name}</a>
+                        </td>
+                        <td class='align-middle text-start'>
+                            ${Status.page(item.type_page)}
+                        </td>
+                        <td class='align-middle text-center'>
+                            <button class="btn btn-primary">
+                                <span class="spinner-border spinner-border-sm" style="--phoenix-spinner-width: 0.8rem;--phoenix-spinner-height: 0.8rem" role="status" aria-hidden="true"></span>
+                                Đang lấy dữ liệu
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            })
+            .join('');
+            return content;
+        }
+        document.addEventListener('DOMContentLoaded', async function() {
+            await request.get();
+            searchModal.showValue(request.params);
+        });
+        searchModal.submit = async function(e) {
+            e.preventDefault();
+            this.loading(true);
+            let value = this.value().get();
+            request.params = value;
+            await request.get();
+            this.loading(false, `<span class='fas fa-filter text-info fs-9 me-2'></span>Lọc`);
+        }
+        async function removeFilter(btn) {
+            btnLoading(btn, true);
+            searchModal.reset();
+            request.params = {};
+            await request.get();
+            btnLoading(btn, false, 'Xóa lọc');
+        }
+        var editModel = new HandleForm('#editModel');
+        var addModel = new HandleForm('#addModel');
+        addModel.closeReset();
+        $('#typeAdd').on('addItem', function() {
+            showUserPage(addModel)
+        });
+        $('#typeEdit').on('addItem', function() {
+            showUserPage(editModel)
+        });
+        async function showUserPage(modal){
+            let choice = modal.elements['type_page'];
+            if(choice.getValue().value != ''){
+                let users = await axios.get(`/api/users/all/?show_all=true&type=${choice.getValue().value}`).then(res => res.data.data)
+                let choiceData = [{
+                    value: '',
+                    label: 'Chọn loại',
+                    selected: true
+                }] 
+                users.forEach(item => {
+                    choiceData.push({
+                        value: item.id,
+                        label: item.name
+                    })
+                })
+                modal.elements['user_id'].setChoices(choiceData,'value','label',true)
+            }
+        }
+        addModel.submit = async function(e){
+            e.preventDefault();
+            let check = this.checkValidate();
+            if(check){
+                this.loading(true);
+                let value = this.value().get()
+                try {
+                    let res = await axios.post(`/api/pages/add/`,value);
+                    if (res.status == 201) {
+                        this.reset();
+                        this.hideModal();
+                        showMessageMD(res.data?.message);
+                        request.id = res.data.data.id;
+                        request.get();
+                    } 
+                } catch (error) {
+                    let res = error.response;
+                    if (res.status == 422) {
+                        console.log(res.data)
+                        this.logError(res.data);
+                    } else {
+                        showErrorMD('Có lỗi xảy ra, vui lòng thử lại sau!');
+                        this.hideModal();
+                        this.reset();
+                    }
+                }
+                this.loading(false);
+            }
+        }
+        editModel.closeReset();
+        
+        async function showOne(id) {
+            try {
+                let fetch = await axios.get(`/api/pages/${id}/`).then(res => res);
+                if (fetch.status == 200) {
+                    editModel.id = fetch.data.id;
+                    editModel.showValue(fetch.data)
+                    setTimeout(() => {
+                        editModel.elements['user_id'].setChoiceByValue(fetch.data.user_id)
+                    }, 200)
+                }
+            } catch (error) {
+                let response = error.response;
+                if (response?.status == 404) {
+                    showErrorMD(response.data.message);
+                    editModel.hideModal();
+                    editModel.reset();
+                } else {
+                    showErrorMD('Có lỗi xảy ra, vui lòng thử lại sau!');
+                    editModel.hideModal();
+                    editModel.reset();
+                }
+            }
+        }
+        editModel.submit = async function(e) {
+            e.preventDefault();
+            let check = this.checkValidate();
+            if(check){
+                this.loading(true);
+                let value = this.value().get();
+                value.id = this.id;
+                try {
+                    let res = await axios.put(`/api/pages/edit/`,value);
+                    if (res.status == 200) {
+                        editModel.reset();
+                        editModel.hideModal();
+                        showMessageMD(res.data.message);
+                        request.id = res.data.data.id;
+                        request.get();
+                    } 
+                } catch (error) {
+                    let res = error.response;
+                    if (res.status == 422) {
+                        this.logError(res.data);
+                    } else {
+                        showErrorMD('Có lỗi xảy ra, vui lòng thử lại sau!');
+                        editModel.hideModal();
+                        editModel.reset();
+                    }
+                }
+                this.loading(false);
+            }
+        }
+    </script>
+{% endblock %}

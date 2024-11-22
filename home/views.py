@@ -22,6 +22,8 @@ def post(request):
 def page(request):
     return render(request, 'pages/fanpages/index.html')
 
+def data(request):
+    return render(request, 'pages/data.html')
 
 def list_accounts(request):
     return render(request, 'pages/users/list_accounts.html')
