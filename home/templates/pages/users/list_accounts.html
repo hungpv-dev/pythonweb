@@ -20,13 +20,18 @@
         <!-- Search -->
         <div id="searchModel">
             <form class="d-flex align-items-center gap-2 flex-wrap mb-2" id="filter-form" style="margin-top: -27px;">
-                <div class="w-100 w-md-auto">
-                    <input type="text" name="dates" class="form-control value empty">
+                <div>
+                    <input type="text" name="code" class="form-control" placeholder="Tìm kiếm mã tài khoản">
                 </div>
-                <div class="w-100 w-md-auto">
-                    <input name="finish_at" type="text" placeholder="Ngày hoàn thành"
-                        data-options='{"mode":"range","disableMobile":true,"dateFormat":"d-m-Y","maxDate": "today","locale":"vn","shorthandCurrentMonth": true}'
-                        class="form-control value empty datetimepicker">
+                <div>
+                    <input type="text" name="name" class="form-control" placeholder="Tìm kiếm tên tài khoản">
+                </div>
+                <div>
+                    <select name="type" class="form-select value empty">
+                        <option value="">Loại tài khoản</option>
+                        <option value="1">Lấy dữ liệu</option>
+                        <option value="2">Đăng bài</option>
+                    </select>
                 </div>
                 <div class="d-flex justify-content-start w-100 w-md-auto" style="height: 36px;margin-left: 20px;">
                     <button type="submit" class="btn btn-sm btn-phoenix-info btn-filter me-1" title="Lọc">
@@ -36,7 +41,7 @@
                 </div>
             </form>
             <div class="d-flex justify-content-end align-items-center">
-                <button class="btn btn-primary" onclick="window.location.href='https://www.facebook.com/login'">
+                <button class="btn btn-primary" type="button" onclick="addAccount()">
                     <span class="fas fa-plus"></span> Thêm tài khoản
                 </button>
             </div>
@@ -49,10 +54,12 @@
                     <thead>
                         <tr>
                             <th class="align-middle text-center text-uppercase">stt</th>
+                            <th class="align-middle text-center text-uppercase">Mã tài khoản</th>
                             <th class="align-middle text-center text-uppercase">Tên tài khoản</th>
-                            <th class="align-middle text-start text-uppercase" style="width: 40%;">Link facebook</th>
+                            <th class="align-middle text-center text-uppercase">Loại tài khoản</th>
+                            <th class="align-middle text-start text-uppercase">Link facebook</th>
                             {% comment %} <th class="align-middle text-start text-uppercase" style="width: 30%;">Cookies</th> {% endcomment %}
-                            <th class="align-middle text-center text-uppercase" style="width: 20%;">Thao tác</th>
+                            <th class="align-middle text-center text-uppercase">Thao tác</th>
                         </tr>
                     </thead>
 
@@ -91,9 +98,25 @@
                     <form class="row g-3" method="put" id="edit-form">
                         <div class="col-sm-12 col-md-12">
                             <div class="form-floating">
+                                <input type="text" name="code" class="form-control empty value"
+                                    placeholder="Mã tài khoản" id="edit-code">
+                                <label>Mã tài khoản</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-floating">
                                 <input type="text" name="name" class="form-control empty value"
                                     placeholder="Tên tài khoản" id="edit-name">
                                 <label>Tên tài khoản</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-floating">
+                                <select name="type" class="form-select value empty choice validate" id="edit-type">
+                                    <option value="">Chọn loại tài khoản</option>
+                                    <option value="1">Lấy dữ liệu</option>
+                                    <option value="2">Đăng bài</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12">
@@ -116,63 +139,13 @@
                                     <button type="button" class="btn btn-close-model btn-secondary mx-1"
                                         data-bs-dismiss="modal">Huỷ
                                     </button>
-                                    <button type="submit" class="btn btn-primary btn-submit mx-1" title="Sửa tài khoản">Lưu</button>
+                                    <button type="submit" class="btn btn-primary btn-submit mx-1" title="Lưu">Lưu</button>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-                {% comment %} Hàm lấy dữ liệu hiển thị lên ô input {% endcomment %}
-                <script>
-                    function showOne(accountId) {
-                        // Fetch the account data using the accountId
-                        fetch(`/api/users/${accountId}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                // Populate the form fields with the fetched data
-                                document.getElementById('edit-name').value = data.name;
-                                document.getElementById('edit-link').value = data.link;
-                                document.getElementById('edit-cookie').value = data.cookie;
 
-                                // Add event listener for the update button
-                                document.querySelector('.btn-submit').onclick = function() {
-                                    updateAccount(accountId);
-                                };
-                            })
-                            .catch(error => console.error('Lỗi lấy dữ liệu:', error));
-                    }
-
-                    function updateAccount(accountId) {
-                        const name = document.getElementById('edit-name').value;
-                        const link = document.getElementById('edit-link').value;
-                        const cookie = document.getElementById('edit-cookie').value;
-
-                        fetch(`/api/users/${accountId}/update_account/`, {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ name, link, cookie }),
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.error) {
-                                console.error('Error updating account:', data.error);
-                                showMessageMD('Cập nhật tài khoản thất bại', 'danger');
-                            } else {
-                                console.log('Account updated successfully:', data);
-                                showMessageMD('Cập nhật tài khoản thành công', 'success');
-                                // Optionally, refresh the account list or close the modal
-                                fetchAccounts();
-                                document.querySelector('.btn-close-model').click();
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error updating account:', error);
-                            showMessageMD('Có lỗi xảy ra khi cập nhật tài khoản', 'danger');
-                        });
-                    }
-                </script>
                 <div class="modal-footer">
                 </div>
             </div>
@@ -183,6 +156,9 @@
 
 {% block script %}
     <script>
+        
+        const route = '/api/users/api_list_accounts';
+        var request = new RequestServer(route);
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM fully loaded and parsed');
             fetchAccounts();
@@ -203,32 +179,135 @@
                 const tableBody = document.getElementById('data_table_body');
                 tableBody.innerHTML = ''; // Xóa dữ liệu cũ
 
-                data.data.forEach((account, index) => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td class='align-middle text-center'>${index + 1}</td>
-                        <td class='align-middle text-center'>${account.name}</td>
-                        <td class='align-middle text-start'><a href='${account.link}'>${account.link}</a></td>
-                        <td class='align-middle text-center'>
-                            <div class='position-relative'>
-                                <button onclick='showOne(${account.id})' class='btn btn-edit-show btn-sm btn-phoenix-secondary text-info me-1 fs-10' title='Cập nhật' type='button' data-bs-toggle='modal' data-bs-target='#editModel'>
-                                    <span class='fas far fa-edit'></span>
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    tableBody.appendChild(row);
-                });
+                if (data && data.data) {
+                    data.data.forEach((account, index) => {
+                        console.log('Account type:', account.type);
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class='align-middle text-center'>${index + 1}</td>
+                            <td class='align-middle text-center'>${account.code || 'N/A'}</td>
+                            <td class='align-middle text-center'>${account.name || 'N/A'}</td>
+                            <td class='align-middle text-center'>${account.type == 1 ? 'Lấy dữ liệu' : 'Đăng bài'}</td>
+                            <td class='align-middle text-start'><a href='${account.link || '#'}'>${account.link || 'N/A'}</a></td>
+                            <td class='align-middle text-center'>
+                                <div class='position-relative'>
+                                    <button onclick='showOne(${account.id})' class='btn btn-edit-show btn-sm btn-phoenix-secondary text-info me-1 fs-10' title='Cập nhật' type='button' data-bs-toggle='modal' data-bs-target='#editModel'>
+                                        <span class='fas far fa-edit'></span>
+                                    </button>
+                                </div>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    console.error('Dữ liệu không hợp lệ');
+                }
             } catch (error) {
-                console.error('Error fetching accounts:', error);
+                console.error('Lỗi lấy dữ liệu:', error);
             }
         }
 
+        var editModel = new HandleForm('#editModel');
+        editModel.submit = async function(e) {
+            e.preventDefault();
+            let check = this.checkValidate();
+            if (check) {
+                this.loading(true);
+                let value = this.value().get();
+                value.id = this.id;
+
+                // Check if the form values have changed
+                let hasChanged = false;
+                const originalData = await axios.get(`/api/users/${value.id}/`);
+                if (originalData.status === 200) {
+                    const originalValue = originalData.data;
+                    hasChanged = value.code !== originalValue.code ||
+                                    value.name !== originalValue.name ||
+                                    value.type !== originalValue.type ||
+                                    value.link !== originalValue.link ||
+                                    value.cookie !== originalValue.cookie;
+                }
+                if (hasChanged) {
+                    try {
+                        let res = await axios.put(`/api/users/${value.id}/update_account/`, value);
+                        if (res.status == 200) {
+                            editModel.reset();
+                            editModel.hideModal();
+                            showMessageMD(res.data.message);    
+                            fetchAccounts(); // Refresh the account list
+                        }
+                    } catch (error) {
+                        let res = error.response;
+                        if (res.status == 422) {
+                            this.logError(res.data);
+                        } else {
+                            showErrorMD('Có lỗi xảy ra, vui lòng thử lại sau!');
+                            editModel.hideModal();
+                            editModel.reset();
+                        }
+                    }
+                } else {
+                    showMessageMD('No changes detected.');
+                }
+                this.loading(false);
+            }
+        }
+        async function showOne(id) {
+            try {
+                let response = await axios.get(`/api/users/${id}/`);
+                if (response.status === 200) {
+                    const data = response.data;
+                    // Kiểm tra dữ liệu trả về
+                    console.log('Data fetched for user:', data);
+                    editModel.showValue(data);
+                    editModel.id = data.id; // Lưu ID người dùng để cập nhật
+                } else {
+                    console.error('Failed to fetch data for user:', response.status);
+                }
+            } catch (error) {
+                console.error('Dữ liệu không tồn tại', error);
+                showErrorMD('Có lỗi xảy ra, vui lòng thử lại sau!');
+            }
+        }
+        document.addEventListener('DOMContentLoaded', async function() {
+            await request.get();
+            searchModal.showValue(request.params);
+        });
+        var searchModal = new HandleForm('#searchModel');
+        searchModal.submit = async function(e) {
+            e.preventDefault();
+            this.loading(true);
+            let value = this.value().get();
+            request.params = value;
+            await request.get();
+            this.loading(false, `<span class='fas fa-filter text-info fs-9 me-2'></span>Lọc`);
+        }
         async function removeFilter(btn) {
             btnLoading(btn, true);
-            document.getElementById('filter-form').reset();
-            fetchAccounts();
+            searchModal.reset();
+            request.params = {};
+            await fetchAccounts();
             btnLoading(btn, false, 'Xóa lọc');
+
+            // Clear URL parameters
+            if (history.pushState) {
+                const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                window.history.pushState({ path: newUrl }, '', newUrl);
+            }
         }
+
+        {% comment %} function addAccount() {
+            // Open a new virtual browser window
+            const virtualBrowser = window.open('', '_blank');
+            virtualBrowser.document.write('<html><head><title>Thêm tài khoản Facebook</title></head><body>');
+            virtualBrowser.document.write('<h1>Đang chuyển hướng đến giao diện đăng nhập Facebook...</h1>');
+            virtualBrowser.document.write('</body></html>');
+
+            // Simulate the process of adding a Facebook account
+            setTimeout(() => {
+                virtualBrowser.location.href = '/api/users/add_facebook_account/';
+            }, 2000); {% endcomment %}
+        }
+
     </script>
 {% endblock %}
