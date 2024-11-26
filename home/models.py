@@ -17,6 +17,8 @@ class Post(models.Model):
 
 class Page(models.Model):
     link = models.CharField(max_length=155)
+    like_counts = models.IntegerField(default=0)
+    follow_counts = models.IntegerField(default=0)
     type = models.CharField(max_length=55, null=True, default='Chủ đề')
     type_page = models.IntegerField(default=1, db_comment='1: Page lấy dữ liệu, 2: Page đăng bài')
     user_id = models.IntegerField(null=True)

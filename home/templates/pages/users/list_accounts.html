@@ -21,10 +21,7 @@
         <div id="searchModel">
             <form class="d-flex align-items-center gap-2 flex-wrap mb-2" id="filter-form" style="margin-top: -27px;">
                 <div>
-                    <input type="text" name="code" class="form-control" placeholder="Tìm kiếm mã tài khoản">
-                </div>
-                <div>
-                    <input type="text" name="name" class="form-control" placeholder="Tìm kiếm tên tài khoản">
+                    <input type="text" name="name" class="form-control" placeholder="Tìm kiếm tài khoản">
                 </div>
                 <div>
                     <select name="type" class="form-select value empty">
@@ -157,54 +154,54 @@
 {% block script %}
     <script>
         
-        const route = '/api/users/api_list_accounts';
+        const route = '/api/users/all';
+        var searchModal = new HandleForm('#searchModel');
+        for ( name in searchModal.validate){
+            let type = searchModal.validate[name];
+            if(type){
+                if (Array.isArray(type) && type.includes('required')) {
+                    delete searchModal.validate[name];
+                }
+            }
+        }
         var request = new RequestServer(route);
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM fully loaded and parsed');
-            fetchAccounts();
-            document.getElementById('filter-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                fetchAccounts();
-            });
+        request.insert = function(data){
+            return data.map(item => {
+                return `
+                    <td class='align-middle text-center'>${request.index++}</td>
+                    <td class='align-middle text-center'>${item.code || 'N/A'}</td>
+                    <td class='align-middle text-center'>${item.name || 'N/A'}</td>
+                    <td class='align-middle text-center'>${item.type == 1 ? 'Lấy dữ liệu' : 'Đăng bài'}</td>
+                    <td class='align-middle text-start'><a href='${item.link || '#'}'>${item.link || 'N/A'}</a></td>
+                    <td class='align-middle text-center'>
+                        <div class='position-relative'>
+                            <button onclick='showOne(${item.id})' class='btn btn-edit-show btn-sm btn-phoenix-secondary text-info me-1 fs-10' title='Cập nhật' type='button' data-bs-toggle='modal' data-bs-target='#editModel'>
+                                <span class='fas far fa-edit'></span>
+                            </button>
+                        </div>
+                    </td>
+                `;
+            }).join('')
+        }
+        document.addEventListener('DOMContentLoaded', async function() {
+            await request.get();
+            searchModal.showValue(request.params);
         });
 
-        async function fetchAccounts() {
-            try {
-                console.log('Fetching accounts...');
-                const formData = new FormData(document.getElementById('filter-form'));
-                const params = new URLSearchParams(formData).toString();
-                const response = await fetch(`/api/users/api_list_accounts?${params}`);
-                const data = await response.json();
-                console.log('Data received:', data);
-                const tableBody = document.getElementById('data_table_body');
-                tableBody.innerHTML = ''; // Xóa dữ liệu cũ
-
-                if (data && data.data) {
-                    data.data.forEach((account, index) => {
-                        console.log('Account type:', account.type);
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td class='align-middle text-center'>${index + 1}</td>
-                            <td class='align-middle text-center'>${account.code || 'N/A'}</td>
-                            <td class='align-middle text-center'>${account.name || 'N/A'}</td>
-                            <td class='align-middle text-center'>${account.type == 1 ? 'Lấy dữ liệu' : 'Đăng bài'}</td>
-                            <td class='align-middle text-start'><a href='${account.link || '#'}'>${account.link || 'N/A'}</a></td>
-                            <td class='align-middle text-center'>
-                                <div class='position-relative'>
-                                    <button onclick='showOne(${account.id})' class='btn btn-edit-show btn-sm btn-phoenix-secondary text-info me-1 fs-10' title='Cập nhật' type='button' data-bs-toggle='modal' data-bs-target='#editModel'>
-                                        <span class='fas far fa-edit'></span>
-                                    </button>
-                                </div>
-                            </td>
-                        `;
-                        tableBody.appendChild(row);
-                    });
-                } else {
-                    console.error('Dữ liệu không hợp lệ');
-                }
-            } catch (error) {
-                console.error('Lỗi lấy dữ liệu:', error);
-            }
+        searchModal.submit = async function(e) {
+            e.preventDefault();
+            this.loading(true);
+            let value = this.value().get();
+            request.params = value;
+            await request.get();
+            this.loading(false, `<span class='fas fa-filter text-info fs-9 me-2'></span>Lọc`);
+        }
+        async function removeFilter(btn) {
+            btnLoading(btn, true);
+            searchModal.reset();
+            request.params = {};
+            await request.get();
+            btnLoading(btn, false, 'Xóa lọc');
         }
 
         var editModel = new HandleForm('#editModel');
@@ -234,7 +231,7 @@
                             editModel.reset();
                             editModel.hideModal();
                             showMessageMD(res.data.message);    
-                            fetchAccounts(); // Refresh the account list
+                            request.get(); // Refresh the account list
                         }
                     } catch (error) {
                         let res = error.response;
@@ -269,45 +266,5 @@
                 showErrorMD('Có lỗi xảy ra, vui lòng thử lại sau!');
             }
         }
-        document.addEventListener('DOMContentLoaded', async function() {
-            await request.get();
-            searchModal.showValue(request.params);
-        });
-        var searchModal = new HandleForm('#searchModel');
-        searchModal.submit = async function(e) {
-            e.preventDefault();
-            this.loading(true);
-            let value = this.value().get();
-            request.params = value;
-            await request.get();
-            this.loading(false, `<span class='fas fa-filter text-info fs-9 me-2'></span>Lọc`);
-        }
-        async function removeFilter(btn) {
-            btnLoading(btn, true);
-            searchModal.reset();
-            request.params = {};
-            await fetchAccounts();
-            btnLoading(btn, false, 'Xóa lọc');
-
-            // Clear URL parameters
-            if (history.pushState) {
-                const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-                window.history.pushState({ path: newUrl }, '', newUrl);
-            }
-        }
-
-        {% comment %} function addAccount() {
-            // Open a new virtual browser window
-            const virtualBrowser = window.open('', '_blank');
-            virtualBrowser.document.write('<html><head><title>Thêm tài khoản Facebook</title></head><body>');
-            virtualBrowser.document.write('<h1>Đang chuyển hướng đến giao diện đăng nhập Facebook...</h1>');
-            virtualBrowser.document.write('</body></html>');
-
-            // Simulate the process of adding a Facebook account
-            setTimeout(() => {
-                virtualBrowser.location.href = '/api/users/add_facebook_account/';
-            }, 2000); {% endcomment %}
-        {% comment %} } {% endcomment %}
-
     </script>
 {% endblock %}

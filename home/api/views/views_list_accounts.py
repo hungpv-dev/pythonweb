@@ -26,14 +26,15 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         Endpoint trả về tất cả các user với phân trang
         """
-        users = User.objects.all()
+        users = User.objects.all().order_by('-id')
         type = request.GET.get('type')
         name = request.GET.get('name')
         if type is not None and type != '':
             users = users.filter(type=type)
         if name is not None and name != '':
             users = users.filter(name__icontains=name) | users.filter(link__icontains=name)
-
+        
+        
         # Trả dữ liệu phân trang
         return JsonResponse(paginate(request, users), safe=False)
 

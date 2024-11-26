@@ -74,6 +74,7 @@
         const route = '/api/users/all/';
         var request = new RequestServer(route);
         var searchModal = new HandleForm('#searchModel');
+        
         for ( name in searchModal.validate){
             let type = searchModal.validate[name];
             if(type){
