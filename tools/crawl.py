@@ -25,6 +25,8 @@ class Crawl:
         self.browser.execute_script("document.body.style.zoom='0.2';")
         sleep(5)
 
+        # like comment
+
         pageLinkPost = f"{self.page.link}/posts/"
         pageLinkStory = "https://www.facebook.com/permalink.php"
         self.pageLinkPost = pageLinkPost
