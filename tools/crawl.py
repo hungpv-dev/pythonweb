@@ -9,6 +9,7 @@ from datetime import datetime
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from urllib.parse import urlparse, parse_qs
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'WebPython.settings')
 django.setup()
@@ -26,6 +27,31 @@ class Crawl:
         sleep(5)
 
         # like comment
+            # Like and comment
+        try:
+            # Lấy số lượt like của fanpage
+            like_element = WebDriverWait(self.browser, 10).until(
+                EC.presence_of_element_located((By.XPATH, './/a[contains(@href, "&sk=friends_likes") and contains(text(), "lượt thích")]'))
+            )
+            page_likes = like_element.text
+            self.page.like_counts = page_likes
+
+            # Lấy số lượt follow của fanpage
+            follow_element = WebDriverWait(self.browser, 10).until(
+                EC.presence_of_element_located((By.XPATH, './/a[contains(@href, "&sk=followers") and contains(text(), "lượt theo dõi")]'))
+            )
+            page_follows = follow_element.text
+            self.page.follow_counts = page_follows
+
+            # Lưu dữ liệu vào database
+            self.page.save()
+
+        except TimeoutException:
+            print('==> Không thể lấy số lượt like hoặc follow của fanpage: Quá thời gian chờ')
+        except NoSuchElementException:
+            print('==> Không thể lấy số lượt like hoặc follow của fanpage: Không tìm thấy phần tử')
+        except Exception as e:
+            print(f'==> Không thể lấy số lượt like hoặc follow của fanpage: {e}')
 
         pageLinkPost = f"{self.page.link}/posts/"
         pageLinkStory = "https://www.facebook.com/permalink.php"

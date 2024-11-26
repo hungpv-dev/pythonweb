@@ -9,10 +9,10 @@
     <nav class="mb-2" aria-label="breadcrumb">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-            <li class="breadcrumb-item">Bài viết</li>
+            <li class="breadcrumb-item">Fanpage</li>
         </ol>
     </nav>
-    <h3 class="text-bold text-body-emphasis mb-5">Danh sách bài viết</h3>
+    <h3 class="text-bold text-body-emphasis mb-5">Danh sách fanpage</h3>
     <div>
         <!-- Search -->
         <div id="searchModel">
@@ -53,6 +53,8 @@
                             <th class="align-middle text-start text-uppercase">đường dẫn</th>
                             <th class="align-middle text-start text-uppercase">loại</th>
                             <th class="align-middle text-start text-uppercase">tài khoản</th>
+                            <th class="align-middle text-center text-uppercase">số lượng like</th>
+                            <th class="align-middle text-center text-uppercase">số lượng follow</th>
                             <th class="align-middle text-center text-uppercase">thao tác</th>
                         </tr>
                     </thead>
@@ -119,6 +121,19 @@
                             <label class='floating-label-cus'>Tài khoản</label>
                         </div>
                     </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-floating">
+                            <input type="number" name="like_counts" class="form-control" title="Số lượng like" placeholder="Số lượng like">
+                            <label>Số lượng like</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-floating">
+                            <input type="number" name="follow_counts" class="form-control" title="Số lượng follow_counts" placeholder="Số lượng follow">
+                            <label>Số lượng follow</label>
+                        </div>
+                    </div>
+
                     <div class="col-12 gy-6">
                         <div class="row g-3 justify-content-center">
                             <div class="col-auto">
@@ -183,6 +198,18 @@
                             <label class='floating-label-cus'>Tài khoản</label>
                         </div>
                     </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-floating">
+                            <input type="number" name="like_counts" class="form-control" title="Số lượng like" placeholder="Số lượng like">
+                            <label>Số lượng like</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-floating">
+                            <input type="number" name="follow_counts" class="form-control" title="Số lượng follow_counts" placeholder="Số lượng follow">
+                            <label>Số lượng follow</label>
+                        </div>
+                    </div>
                     <div class="col-12 gy-6">
                         <div class="row g-3 justify-content-center">
                             <div class="col-auto">
@@ -231,6 +258,8 @@
                         <td class='align-middle text-start'>
                             ${item.user ? `<a href=''>${item.user?.username}</a>` : 'Chưa có'}
                         </td>
+                        <td class='align-middle text-center'>${item.like_counts}</td>
+                        <td class='align-middle text-center'>${item.follow_counts}</td>
                         <td class='align-middle text-center'>
                             <div class='position-relative'>
                                 <button onclick='showOne(${item.id})' class='btn btn-edit-show btn-sm btn-phoenix-secondary text-info me-1 fs-10' title='Cập nhật' type='button' data-bs-toggle='modal' data-bs-target='#editModel'>
