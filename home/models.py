@@ -29,7 +29,7 @@ class Comment(models.Model):
 
 
 class User(models.Model):
-    name = models.IntegerField(null=True)
+    name = models.CharField(null=True,max_length=155)
     code = models.CharField(null=True,max_length=155)
     pid = models.CharField(max_length=55, null=True)
     link = models.CharField(max_length=155)

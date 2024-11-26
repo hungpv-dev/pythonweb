@@ -20,9 +20,11 @@ class UserSerializer(serializers.ModelSerializer):
         return User.objects.create(**validated_data)
     
     def updateUser(self, instance, validated_data):
+        instance.code = validated_data.get('code', instance.code)
         instance.name = validated_data.get('name', instance.name)
+        instance.type = validated_data.get('type', instance.type)
         instance.link = validated_data.get('link', instance.link)
         instance.cookie = validated_data.get('cookie', instance.cookie)
         
-        instance.save()
+        instance.save(update_fields=['code', 'name', 'type', 'link', 'cookie'])
         return instance
