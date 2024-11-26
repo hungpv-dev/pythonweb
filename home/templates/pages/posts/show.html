@@ -1,0 +1,78 @@
+{% extends "pages/base.html" %}
+
+{% block title %}
+    Cập nhật bài viết
+{% endblock %}
+
+{% block content %}
+<!-- Modal -->
+<div id="postModal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-8 w-1/2">
+        <h2 class='text-center text-3xl font-bold text-primary mb-6'>Cập nhật bài viết</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class='flex justify-between items-center mb-6'>
+                <div class="flex space-x-4">
+                    <label class="text-lg font-semibold">ID:</label>
+                    <input type="text" id="postId" name="id" class="border border-gray-300 rounded-md bg-gray-100 px-4 py-2" readonly>
+                </div>
+                <div class="flex space-x-4">
+                    <label class="text-lg font-semibold">Facebook:</label>
+                    <input type="url" id="linkFacebook" name="link_facebook" class="border border-gray-300 rounded-md bg-gray-100 px-4 py-2">
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-lg font-semibold">Nội dung:</label>
+                <textarea id="content" name="content" class="w-full border border-gray-300 rounded-md bg-gray-100 px-4 py-2"></textarea>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-lg font-semibold">Cảm xúc:</label>
+                <input type="number" id="like" name="like" class="border border-gray-300 rounded-md bg-gray-100 px-4 py-2">
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-lg font-semibold">Bình luận:</label>
+                <input type="text" id="comment" name="comment" class="border border-gray-300 rounded-md bg-gray-100 px-4 py-2">
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-lg font-semibold">Chia sẻ:</label>
+                <input type="text" id="share" name="share" class="border border-gray-300 rounded-md bg-gray-100 px-4 py-2">
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-lg font-semibold">Trạng thái:</label>
+                <select id="up" name="up" class="border border-gray-300 rounded-md bg-gray-100 px-4 py-2">
+                    <option value="true">Đã đăng</option>
+                    <option value="false">Chưa đăng</option>
+                </select>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary transition duration-300">Cập nhật</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const postId = {{ post.id }};
+        fetch(`{% url 'api_post_detail' post.id %}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('postId').value = data.id;
+                document.getElementById('linkFacebook').value = data.link_facebook;
+                document.getElementById('content').value = data.content;
+                document.getElementById('like').value = data.like;
+                document.getElementById('comment').value = data.comment;
+                document.getElementById('share').value = data.share;
+                document.getElementById('up').value = data.up ? 'true' : 'false';
+                document.getElementById('postModal').classList.remove('hidden');
+            })
+            .catch(error => console.error('Error fetching post data:', error));
+    });
+</script>
+{% endblock %}
